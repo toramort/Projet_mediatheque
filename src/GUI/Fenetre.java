@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 class Fenetre extends JFrame {
 
@@ -11,7 +12,7 @@ class Fenetre extends JFrame {
         this.setTitle("Outil de gestion de médiathèque");
         this.setSize(1080, 720);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         JPanel container = new JPanel();
 
@@ -46,6 +47,19 @@ class Fenetre extends JFrame {
 
         this.setContentPane(container);
 
+        //Confirmation fermeture
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing (WindowEvent windowEvent){
+                if (JOptionPane.showConfirmDialog(null,
+                    "Voulez-vous quitter l'application ?", "Fermeture",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         this.setVisible(true);
     }
 
@@ -53,7 +67,7 @@ class Fenetre extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            ZDialog zd = new ZDialog(null, "Coucou les ZérOs", true);
+            ZDialog zd = new ZDialog(null, "Album", true);
             zd.showZDialog();
         }
     }

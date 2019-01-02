@@ -10,7 +10,7 @@ public class ZDialog extends JDialog {
     public ZDialog(JFrame parent, String title, boolean modal) {
 
         super(parent, title, modal);
-        this.setSize(550, 270);
+        this.setSize(1080, 720);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.initComponent();
@@ -18,17 +18,39 @@ public class ZDialog extends JDialog {
 
     private void initComponent() {
         JPanel container = new JPanel();
-
+        container.setLayout(new BorderLayout());
+        GridLayout mainLayout = new GridLayout(3,2, 200, 200);
         JPanel main = new JPanel();
-        JLabel titre = new JLabel("Choix de la catégorie");
-        main.add(titre);
+        main.setLayout(mainLayout);
 
-        JTextField titreField = new JTextField("Album");
+        JLabel titre = new JLabel("Choix de la catégorie");
+        container.add(titre, BorderLayout.NORTH);
+
+        JLabel titreLabel = new JLabel("Titre : ", JLabel.TRAILING);
+        main.add(titreLabel);
+        JTextField titreField = new JTextField();
+        titreLabel.setLabelFor(titreField);
         main.add(titreField);
-        JTextField auteurField = new JTextField("Film");
-        main.add(auteurField);
-        JTextField dateField = new JTextField("Livre");
+
+        JLabel personalitiesLabel = new JLabel("Auteurs : ");
+        main.add(personalitiesLabel);
+        JButton personalitiesField = new JButton();
+        personalitiesLabel.setLabelFor(personalitiesField);
+        main.add(personalitiesField);
+
+        JLabel dateLabel = new JLabel("Date : ");
+        main.add(dateLabel);
+        JTextField dateField = new JTextField();
+        dateLabel.setLabelFor(dateField);
         main.add(dateField);
+
+        JLabel genreLabel = new JLabel("Genre : ");
+        main.add(genreLabel);
+        JTextField genreField = new JTextField();
+        genreLabel.setLabelFor(genreField);
+        main.add(genreField);
+
+        
 
         JButton boutonOk = new JButton();
 
