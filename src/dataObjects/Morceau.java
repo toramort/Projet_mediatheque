@@ -8,6 +8,7 @@ import java.util.SortedSet;
 public class Morceau {
     private String name_morceau;
     private List<Personality> personalities;
+    private int id_morceau;
 
     public Morceau(String name_morceau, List<Personality> personalities) {
         this.name_morceau = name_morceau;

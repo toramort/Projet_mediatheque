@@ -9,6 +9,7 @@ public class Personality {
     private String surname;
     private List<Job> jobs; //checkbox jobs boite de dialogue
     private List<Morceau> morceaux;
+    private int id_personality;
 
     public Personality(String firstname, String lastname, String surname, List<Job> jobs, List<Morceau> morceaux){
 

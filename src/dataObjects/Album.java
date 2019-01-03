@@ -7,6 +7,7 @@ public class Album extends Oeuvre {
 
     private Liste morceaux;
     private Liste personalities;
+    private int id_album;
 
     public Album(String title, Date date_oeuvre, boolean finished, Liste morceaux, Liste personalities) {
         super(title, date_oeuvre, finished);
