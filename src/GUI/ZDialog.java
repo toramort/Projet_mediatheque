@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class ZDialog extends JDialog {
 
     private boolean sendData;
