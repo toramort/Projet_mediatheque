@@ -42,7 +42,7 @@ class Fenetre extends JFrame {
 
         boutonMusique.addActionListener(new boutonMusicListener());
         boutonFilm.addActionListener(new boutonFilmListener());
-        boutonLivre.addActionListener(new boutonFilmListener());
+        boutonLivre.addActionListener(new boutonLivreListener());
         boutonGame.addActionListener(new boutonGameListener());
 
         this.setContentPane(container);

@@ -19,7 +19,7 @@ public class ZDialog extends JDialog {
     private void initComponent() {
         JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
-        GridLayout mainLayout = new GridLayout(3,2, 200, 200);
+        GridLayout mainLayout = new GridLayout(4, 2, 200, 200);
         JPanel main = new JPanel();
         main.setLayout(mainLayout);
 
