@@ -52,16 +52,15 @@ class Fenetre extends JFrame {
         JButton book = new FlatButton("Livres");
         menu.add(book);
 
-        JPanel ajoutOeuvre = new JPanel();
-        ajoutOeuvre.add(new JLabel("ajout oeuvre"));
+        JPanel ajoutOeuvre = new AjoutOeuvrePanel();
+
         JPanel musics = new JPanel();
-        musics.add(new JLabel("musiques"));
+
         JPanel games = new JPanel();
-        games.add(new JLabel("jeux"));
+
         JPanel movies = new JPanel();
-        movies.add(new JLabel("films"));
+
         JPanel books = new JPanel();
-        books.add(new JLabel("livres"));
 
 
         GridBagConstraints gbc = new GridBagConstraints();

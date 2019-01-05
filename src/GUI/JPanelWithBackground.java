@@ -3,6 +3,7 @@ package GUI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class JPanelWithBackground extends JPanel {
 
@@ -11,9 +12,9 @@ public class JPanelWithBackground extends JPanel {
     // Some code to initialize the background image.
     // Here, we use the constructor to load the image. This
     // can vary depending on the use case of the panel.
-    public JPanelWithBackground(String fileName) {
+    JPanelWithBackground(String fileName) {
         try {
-            backgroundImage = ImageIO.read(getClass().getResource(fileName));
+            backgroundImage = ImageIO.read(new File(fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }
