@@ -11,7 +11,7 @@ class Fenetre extends JFrame {
 
     Fenetre() {
         this.setTitle("Outil de gestion de médiathèque");
-        this.setSize(1080, 720);
+        this.setSize(500, 400);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -29,23 +29,15 @@ class Fenetre extends JFrame {
 
 
         JButton addOeuvre = new FlatButton("Oeuvre +");
-        addOeuvre.addActionListener(e -> {
-            indice = 0;
-            mainLayout.next(main);
-        });
+        addOeuvre.addActionListener(e -> mainLayout.next(main));
         menu.add(addOeuvre);
 
         JButton album = new FlatButton("Albums");
-        album.addActionListener(e -> {
-            mainLayout.show(main, listContent[1]);
-        });
+        album.addActionListener(e -> mainLayout.show(main, listContent[1]));
         menu.add(album);
 
         JButton game = new FlatButton("Music");
-        game.addActionListener(e -> {
-            indice = 2;
-            mainLayout.show(main, listContent[2]);
-        });
+        game.addActionListener(e -> mainLayout.show(main, listContent[2]));
         menu.add(game);
         JButton film = new FlatButton("film");
         menu.add(film);

@@ -3,6 +3,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -10,6 +12,9 @@ import java.sql.Statement;
 import static java.sql.DriverManager.getConnection;
 
 class AjoutOeuvrePanel extends JPanel {
+
+    private JComboBox<String> categorie;
+    private JPanel consolePanel;
 
     AjoutOeuvrePanel() {
         Connection conn = null;
@@ -23,24 +28,50 @@ class AjoutOeuvrePanel extends JPanel {
             conn = getConnection(url, user, passwd);
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Connection to database failed", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new GridLayout(10, 1));
 
         GridLayout mainLayout = new GridLayout();
 
+        //===== titre =====
+        JPanel titrePanel = new JPanel();
+        titrePanel.setLayout(new GridLayout(1, 2));
+
+        JLabel titreLabel = new JLabel("Titre : ");
+        titrePanel.add(titreLabel);
+
         JTextField titre = new JTextField();
         titre.setPreferredSize(new Dimension(200, 30));
-        this.add(titre);
+        titreLabel.setLabelFor(titre);
+        titrePanel.add(titre);
+        this.add(titrePanel);
+
+        //==== catégorie =====
+        JPanel categoriePanel = new JPanel(new GridLayout(1, 3));
+
+        JLabel categorieLabel = new JLabel("Catégorie : ");
+        categoriePanel.add(categorieLabel);
 
         String[] listCategorie = {"Album", "Jeu", "Film", "Livre"};
-        JComboBox<String> categorie = new JComboBox<>(listCategorie);
+        categorie = new JComboBox<>(listCategorie);
         categorie.setPreferredSize(new Dimension(100, 30));
-        this.add(categorie);
+        categorie.addActionListener(new categorieListener());
+        categorieLabel.setLabelFor(categorie);
+        categoriePanel.add(categorie);
+        this.add(categoriePanel);
+
+        //===== origine =====
+        JPanel originPanel = new JPanel(new GridLayout(1, 3));
+
+        JLabel originLabel = new JLabel("Origine : ");
 
         JButton origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
-        this.add(origin);
+        originLabel.setLabelFor(origin);
+        originPanel.add(originLabel);
+        originPanel.add(origin);
 
         try {
             Statement state = conn.createStatement();
@@ -50,15 +81,24 @@ class AjoutOeuvrePanel extends JPanel {
                 do {
                     comboOrigins.addItem(recordedOrigins.getString("name_o"));
                 } while (recordedOrigins.next());
-                this.add(comboOrigins);
+                ;
+                originPanel.add(comboOrigins);
+                this.add(originPanel);
             }
-        } catch (java.sql.SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+        //===== support =====
+        JPanel supportPanel = new JPanel(new GridLayout(1, 3));
+
+        JLabel supportLabel = new JLabel("Support : ");
+
         JButton support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
-        this.add(support);
+        supportLabel.setLabelFor(support);
+        supportPanel.add(supportLabel);
+        supportPanel.add(support);
 
         try {
             Statement state = conn.createStatement();
@@ -68,15 +108,23 @@ class AjoutOeuvrePanel extends JPanel {
                 do {
                     comboSupports.addItem(recordedSupports.getString("name_s"));
                 } while (recordedSupports.next());
-                this.add(comboSupports);
+                supportPanel.add(comboSupports);
+                this.add(supportPanel);
             }
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
 
+        //===== version =====
+        JPanel versionPanel = new JPanel(new GridLayout(1, 3));
+
+        JLabel versionLabel = new JLabel("Version : ");
+
         JButton version = new JButton("Version+");
         version.setPreferredSize(new Dimension(100, 30));
-        this.add(version);
+        versionLabel.setLabelFor(version);
+        versionPanel.add(versionLabel);
+        versionPanel.add(version);
 
         try {
             Statement state = conn.createStatement();
@@ -86,15 +134,23 @@ class AjoutOeuvrePanel extends JPanel {
                 do {
                     comboVersions.addItem(recordedVersions.getString("version"));
                 } while (recordedVersions.next());
-                this.add(comboVersions);
+                versionPanel.add(comboVersions);
+                this.add(versionPanel);
             }
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
 
+        //===== genre =====
+        JPanel genrePanel = new JPanel(new GridLayout(1, 3));
+
+        JLabel genreLabel = new JLabel("Genre : ");
+
         JButton genre = new JButton("Genre+");
         genre.setPreferredSize(new Dimension(100, 30));
-        this.add(genre);
+        genreLabel.setLabelFor(genre);
+        genrePanel.add(genreLabel);
+        genrePanel.add(genre);
 
         try {
             Statement state = conn.createStatement();
@@ -104,7 +160,8 @@ class AjoutOeuvrePanel extends JPanel {
                 do {
                     comboGenres.addItem(recordedgenres.getString("genre"));
                 } while (recordedgenres.next());
-                this.add(comboGenres);
+                genrePanel.add(comboGenres);
+                this.add(genrePanel);
             }
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
@@ -113,14 +170,76 @@ class AjoutOeuvrePanel extends JPanel {
 /*
 coder sélection des morceaux
  */
+
+        JPanel morceauxPanel = new JPanel(new GridLayout(1, 2));
+
+        JLabel morceauxLabel = new JLabel("Morceaux : ");
+
         JButton morceaux = new JButton("Morceaux");
-        this.add(morceaux);
+        morceaux.addActionListener(e -> JOptionPane.showMessageDialog(this, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        morceauxLabel.setLabelFor(morceaux);
+        morceauxPanel.add(morceauxLabel);
+        morceauxPanel.add(morceaux);
+        this.add(morceauxPanel);
 
 /*
 coder sélection des personalities
  */
-        JButton personalities = new JButton("Auteurs");
-        this.add(personalities);
 
+        JPanel personalitiesPanel = new JPanel(new GridLayout(1, 2));
+
+        JLabel personalitiesLabel = new JLabel("Auteurs : ");
+
+        JButton personalities = new JButton("Auteurs");
+        personalities.addActionListener(e -> JOptionPane.showMessageDialog(null, "BOITE DE DIALOGUE AJOUT MULTIPLE DE PERSONALITIES, CRéATION DE PERSONNALITIES", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        personalitiesLabel.setLabelFor(personalities);
+        personalitiesPanel.add(personalitiesLabel);
+        personalitiesPanel.add(personalities);
+        this.add(personalitiesPanel);
+
+        //===== console =====
+        consolePanel = new JPanel(new GridLayout(1, 3));
+
+        JLabel consoleLabel = new JLabel("Console : ");
+
+        JButton console = new JButton("Console+");
+        console.setPreferredSize(new Dimension(100, 30));
+        consoleLabel.setLabelFor(console);
+        consolePanel.add(consoleLabel);
+        consolePanel.add(console);
+
+        try {
+            Statement state = conn.createStatement();
+            ResultSet recordedConsoles = state.executeQuery("select * from console");
+            if (recordedConsoles.next()) {
+                JComboBox<String> comboConsoles = new JComboBox<>();
+                do {
+                    comboConsoles.addItem(recordedConsoles.getString("name_c"));
+                } while (recordedConsoles.next());
+                consolePanel.add(comboConsoles);
+                consolePanel.setBackground(Color.red);
+
+                System.out.println("iuzbrg");
+
+            }
+            this.add(consolePanel);
+            consolePanel.setVisible(false);
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.add(new JButton("Envoyer"));
+
+    }
+
+    class categorieListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (categorie.getSelectedIndex() == 1) {
+                consolePanel.setVisible(true);
+            } else {
+                consolePanel.setVisible(false);
+            }
+        }
     }
 }
