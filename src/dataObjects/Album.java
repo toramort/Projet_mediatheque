@@ -5,22 +5,12 @@ import java.util.List;
 
 public class Album extends Oeuvre {
 
-    private Liste morceaux;
-    private Liste personalities;
+    private List<Morceau> morceaux;
     private int id_album;
 
-    public Album(String title, Date date_oeuvre, boolean finished, Liste morceaux, Liste personalities) {
-        super(title, date_oeuvre, finished);
+    public Album(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Console console, Categorie categorie, List<Morceau> morceaux, int id_album) {
+        super(id_oeuvre, title, date_ajout, date_oeuvre, finished, personalities, genres, origine, versions, support, evaluations, console, categorie);
         this.morceaux = morceaux;
-        this.personalities = personalities;
-    }
-
-    @Override
-    public String toString() {
-        return "Album{" +
-            "morceaux=" + morceaux +
-            ", personalities=" + personalities +
-            super.toString() +
-            '}';
+        this.id_album = id_album;
     }
 }

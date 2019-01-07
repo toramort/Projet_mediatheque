@@ -4,6 +4,7 @@ package GUI;
 import dataObjects.Categorie;
 import dataObjects.Origine;
 import dataObjects.Support;
+import dataObjects.Version;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ class AjoutOeuvrePanel extends JPanel {
     private JButton support;
     private JComboBox<Support> comboSupports;
     private JButton version;
-    private JComboBox<String> comboVersions;
+    private JComboBox<Version> comboVersions;
     private JPanel consolePanel;
 
 
@@ -78,6 +79,8 @@ class AjoutOeuvrePanel extends JPanel {
                 comboCategorie.addActionListener(new categorieListener());
                 categoriePanel.add(comboOrigins);
                 this.add(categoriePanel);
+            } else {
+                JOptionPane.showMessageDialog(this, "il n'y a pas de catégorie dans ta BDD !", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,7 +132,7 @@ class AjoutOeuvrePanel extends JPanel {
             if (recordedSupports.next()) {
                 comboSupports = new JComboBox<>();
                 do {
-                    comboSupports.addItem(recordedSupports.getString("name_s"));
+                    comboSupports.addItem(new Support(recordedSupports.getInt("id_s"), recordedSupports.getString("name_s")));
                 } while (recordedSupports.next());
                 supportPanel.add(comboSupports);
                 this.add(supportPanel);
@@ -155,7 +158,7 @@ class AjoutOeuvrePanel extends JPanel {
             if (recordedVersions.next()) {
                 comboVersions = new JComboBox<>();
                 do {
-                    comboVersions.addItem(recordedVersions.getString("version"));
+                    comboVersions.addItem(new Version(recordedVersions.getInt("id_v"), recordedVersions.getString("version")));
                 } while (recordedVersions.next());
                 versionPanel.add(comboVersions);
                 this.add(versionPanel);

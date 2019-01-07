@@ -16,4 +16,9 @@ public class Support {
     public String getName_s() {
         return name_s;
     }
+
+    @Override
+    public String toString() {
+        return name_s;
+    }
 }
