@@ -1,6 +1,10 @@
 package GUI;
 
 
+import dataObjects.Categorie;
+import dataObjects.Origine;
+import dataObjects.Support;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +17,22 @@ import static java.sql.DriverManager.getConnection;
 
 class AjoutOeuvrePanel extends JPanel {
 
-    private JComboBox<String> categorie;
+    private Connection conn;
+
+    private JTextField titre;
+    private JComboBox<Categorie> comboCategorie;
+    private JButton origin;
+    private JComboBox<Origine> comboOrigins;
+    private JButton support;
+    private JComboBox<Support> comboSupports;
+    private JButton version;
+    private JComboBox<String> comboVersions;
     private JPanel consolePanel;
 
+
     AjoutOeuvrePanel() {
-        Connection conn = null;
+
+        conn = null;
         try {
             Class.forName("org.postgresql.Driver");
 
@@ -33,8 +48,6 @@ class AjoutOeuvrePanel extends JPanel {
 
         this.setLayout(new GridLayout(10, 1));
 
-        GridLayout mainLayout = new GridLayout();
-
         //===== titre =====
         JPanel titrePanel = new JPanel();
         titrePanel.setLayout(new GridLayout(1, 2));
@@ -42,7 +55,7 @@ class AjoutOeuvrePanel extends JPanel {
         JLabel titreLabel = new JLabel("Titre : ");
         titrePanel.add(titreLabel);
 
-        JTextField titre = new JTextField();
+        titre = new JTextField();
         titre.setPreferredSize(new Dimension(200, 30));
         titreLabel.setLabelFor(titre);
         titrePanel.add(titre);
@@ -54,12 +67,23 @@ class AjoutOeuvrePanel extends JPanel {
         JLabel categorieLabel = new JLabel("Catégorie : ");
         categoriePanel.add(categorieLabel);
 
-        String[] listCategorie = {"Album", "Jeu", "Film", "Livre"};
-        categorie = new JComboBox<>(listCategorie);
-        categorie.setPreferredSize(new Dimension(100, 30));
-        categorie.addActionListener(new categorieListener());
-        categorieLabel.setLabelFor(categorie);
-        categoriePanel.add(categorie);
+        try {
+            Statement state = conn.createStatement();
+            ResultSet recordedCategories = state.executeQuery("select * from categorie");
+            if (recordedCategories.next()) {
+                comboCategorie = new JComboBox<>();
+                do {
+                    comboCategorie.addItem(new Categorie(recordedCategories.getInt("id_c"), recordedCategories.getString("name_c")));
+                } while (recordedCategories.next());
+                comboCategorie.addActionListener(new categorieListener());
+                categoriePanel.add(comboOrigins);
+                this.add(categoriePanel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        categorieLabel.setLabelFor(comboCategorie);
+        categoriePanel.add(comboCategorie);
         this.add(categoriePanel);
 
         //===== origine =====
@@ -67,7 +91,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel originLabel = new JLabel("Origine : ");
 
-        JButton origin = new JButton("Origin+");
+        origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
         originLabel.setLabelFor(origin);
         originPanel.add(originLabel);
@@ -77,11 +101,10 @@ class AjoutOeuvrePanel extends JPanel {
             Statement state = conn.createStatement();
             ResultSet recordedOrigins = state.executeQuery("select * from origin");
             if (recordedOrigins.next()) {
-                JComboBox<String> comboOrigins = new JComboBox<>();
+                comboOrigins = new JComboBox<>();
                 do {
-                    comboOrigins.addItem(recordedOrigins.getString("name_o"));
+                    comboOrigins.addItem(new Origine(recordedOrigins.getString("name_o"), recordedOrigins.getInt("id_o")));
                 } while (recordedOrigins.next());
-                ;
                 originPanel.add(comboOrigins);
                 this.add(originPanel);
             }
@@ -94,7 +117,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel supportLabel = new JLabel("Support : ");
 
-        JButton support = new JButton("Support+");
+        support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
         supportLabel.setLabelFor(support);
         supportPanel.add(supportLabel);
@@ -104,7 +127,7 @@ class AjoutOeuvrePanel extends JPanel {
             Statement state = conn.createStatement();
             ResultSet recordedSupports = state.executeQuery("select * from support");
             if (recordedSupports.next()) {
-                JComboBox<String> comboSupports = new JComboBox<>();
+                comboSupports = new JComboBox<>();
                 do {
                     comboSupports.addItem(recordedSupports.getString("name_s"));
                 } while (recordedSupports.next());
@@ -120,7 +143,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel versionLabel = new JLabel("Version : ");
 
-        JButton version = new JButton("Version+");
+        version = new JButton("Version+");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
         versionPanel.add(versionLabel);
@@ -130,7 +153,7 @@ class AjoutOeuvrePanel extends JPanel {
             Statement state = conn.createStatement();
             ResultSet recordedVersions = state.executeQuery("select * from version");
             if (recordedVersions.next()) {
-                JComboBox<String> comboVersions = new JComboBox<>();
+                comboVersions = new JComboBox<>();
                 do {
                     comboVersions.addItem(recordedVersions.getString("version"));
                 } while (recordedVersions.next());
@@ -175,8 +198,9 @@ coder sélection des morceaux
 
         JLabel morceauxLabel = new JLabel("Morceaux : ");
 
-        JButton morceaux = new JButton("Morceaux");
-        morceaux.addActionListener(e -> JOptionPane.showMessageDialog(this, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        //JButton morceaux = new JButton("Morceaux");
+        //morceaux.addActionListener(e -> JOptionPane.showMessageDialog(this, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        JTextField morceaux = new JTextField();
         morceauxLabel.setLabelFor(morceaux);
         morceauxPanel.add(morceauxLabel);
         morceauxPanel.add(morceaux);
@@ -190,8 +214,9 @@ coder sélection des personalities
 
         JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
-        JButton personalities = new JButton("Auteurs");
-        personalities.addActionListener(e -> JOptionPane.showMessageDialog(null, "BOITE DE DIALOGUE AJOUT MULTIPLE DE PERSONALITIES, CRéATION DE PERSONNALITIES", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        //JButton personalities = new JButton("Auteurs");
+        //personalities.addActionListener(e -> JOptionPane.showMessageDialog(null, "BOITE DE DIALOGUE AJOUT MULTIPLE DE PERSONALITIES, CRéATION DE PERSONNALITIES", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        JTextField personalities = new JTextField();
         personalitiesLabel.setLabelFor(personalities);
         personalitiesPanel.add(personalitiesLabel);
         personalitiesPanel.add(personalities);
@@ -228,18 +253,34 @@ coder sélection des personalities
             e.printStackTrace();
         }
 
-        this.add(new JButton("Envoyer"));
+        JButton boutonEnvoyer = new JButton("Envoyer");
+        this.add(boutonEnvoyer);
 
     }
 
     class categorieListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (categorie.getSelectedIndex() == 1) {
+            if (comboCategorie.getSelectedIndex() == 3) {
                 consolePanel.setVisible(true);
             } else {
                 consolePanel.setVisible(false);
             }
         }
     }
+/*
+    class titreListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String titlestr = titre.getText();
+            String
+            String query = "INSERT INTO oeuvre(title, date_ajout, date_oeuvre, finished, id_p, id_o, id_c, id_s) VALUES (?)";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, titre_film.getText());
+
+            statement.execute();
+        }
+    }
+    */
 }
