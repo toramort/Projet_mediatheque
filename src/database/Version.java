@@ -1,4 +1,4 @@
-package dataObjects;
+package database;
 
 public class Version {
     private int id_v;

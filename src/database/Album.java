@@ -1,4 +1,4 @@
-package dataObjects;
+package database;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +12,21 @@ public class Album extends Oeuvre {
         super(id_oeuvre, title, date_ajout, date_oeuvre, finished, personalities, genres, origine, versions, support, evaluations, console, categorie);
         this.morceaux = morceaux;
         this.id_album = id_album;
+    }
+
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void delete() {
+
     }
 
     @Override

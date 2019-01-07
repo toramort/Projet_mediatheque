@@ -1,4 +1,4 @@
-package dataObjects;
+package database;
 
 public class Job {
 

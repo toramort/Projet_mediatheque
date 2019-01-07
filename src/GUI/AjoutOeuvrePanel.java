@@ -1,7 +1,7 @@
 package GUI;
 
 
-import dataObjects.*;
+import database.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +13,10 @@ import java.sql.Statement;
 
 class AjoutOeuvrePanel extends JPanel {
 
-    private Connection conn = ConnectionDB.getConn();
+    private Connection conn = DBMaster.getConn();
 
     private JTextField titre;
-    private JComboBox<Categorie> comboCategorie;
+    private JComboBox<Categorie> comboCategorie = new JComboBox<>();
     private JButton origin;
     private JComboBox<Origine> comboOrigins;
     private JButton support;
@@ -51,23 +51,10 @@ class AjoutOeuvrePanel extends JPanel {
         JLabel categorieLabel = new JLabel("Catégorie : ");
         categoriePanel.add(categorieLabel);
 
-        try {
-            Statement state = conn.createStatement();
-            ResultSet recordedCategories = state.executeQuery("select * from categorie");
-            if (recordedCategories.next()) {
-                comboCategorie = new JComboBox<>();
-                do {
-                    comboCategorie.addItem(new Categorie(recordedCategories.getInt("id_c"), recordedCategories.getString("name_c")));
-                } while (recordedCategories.next());
-                comboCategorie.addActionListener(new categorieListener());
-                categoriePanel.add(comboOrigins);
-                this.add(categoriePanel);
-            } else {
-                JOptionPane.showMessageDialog(this, "il n'y a pas de catégorie dans ta BDD !", "Error", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (Categorie cat : DBMaster.readCategorie()) {
+            comboCategorie.addItem(cat);
         }
+
         categorieLabel.setLabelFor(comboCategorie);
         categoriePanel.add(comboCategorie);
         this.add(categoriePanel);
@@ -79,7 +66,12 @@ class AjoutOeuvrePanel extends JPanel {
 
         origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
-        origin.addActionListener(e -> new InsertionOrigin());
+        origin.addActionListener(e -> {
+            String newNameOrigin = JOptionPane.showInputDialog(null, "Veuillez entrer une nouvelle origine", "Nouvelle origine", JOptionPane.QUESTION_MESSAGE);
+            Origine nvOrigine = new Origine(newNameOrigin);
+            nvOrigine.create();
+            comboOrigins.addItem(nvOrigine);
+        });
         originLabel.setLabelFor(origin);
         originPanel.add(originLabel);
         originPanel.add(origin);
@@ -106,7 +98,12 @@ class AjoutOeuvrePanel extends JPanel {
 
         support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
-        support.addActionListener(e -> new InsertionSupport());
+        support.addActionListener(e -> {
+            String newNameSupport = JOptionPane.showInputDialog(null, "Veuillez entrer un nouveau support", "Nouveau support", JOptionPane.QUESTION_MESSAGE);
+            Support nvSupport = new Support(newNameSupport);
+            nvSupport.create();
+            comboSupports.addItem(nvSupport);
+        });
         supportLabel.setLabelFor(support);
         supportPanel.add(supportLabel);
         supportPanel.add(support);
@@ -218,7 +215,12 @@ coder sélection des personalities
 
         JButton console = new JButton("Console+");
         console.setPreferredSize(new Dimension(100, 30));
-        console.addActionListener(e -> new InsertionConsole());
+        console.addActionListener(e -> {
+            String newNameConsole = JOptionPane.showInputDialog(null, "Veuillez entrer une nouvelle console", "Nouvelle console", JOptionPane.QUESTION_MESSAGE);
+            Console nvConsole = new Console(newNameConsole);
+            nvConsole.create();
+            comboConsoles.addItem(nvConsole);
+        });
         consoleLabel.setLabelFor(console);
         consolePanel.add(consoleLabel);
         consolePanel.add(console);

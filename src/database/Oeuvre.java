@@ -1,9 +1,9 @@
-package dataObjects;
+package database;
 
 import java.util.Date;
 import java.util.List;
 
-public abstract class Oeuvre {
+public abstract class Oeuvre implements DatabaseObject {
 
     private int id_oeuvre;
     private String title;
@@ -34,6 +34,7 @@ public abstract class Oeuvre {
         this.console = console;
         this.categorie = categorie;
     }
+
 
     public int getId_oeuvre() {
         return id_oeuvre;

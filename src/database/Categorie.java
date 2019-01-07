@@ -1,6 +1,6 @@
-package dataObjects;
+package database;
 
-public class Categorie {
+public class Categorie implements DatabaseObject<Categorie> {
 
     private int id_c;
     private String name_c;
@@ -8,6 +8,21 @@ public class Categorie {
     public Categorie(int id_c, String name_c) {
         this.id_c = id_c;
         this.name_c = name_c;
+    }
+
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void delete() {
+
     }
 
     public int getId_c() {
