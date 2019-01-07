@@ -1,10 +1,7 @@
 package GUI;
 
 
-import dataObjects.Categorie;
-import dataObjects.Origine;
-import dataObjects.Support;
-import dataObjects.Version;
+import dataObjects.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +11,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static java.sql.DriverManager.getConnection;
-
 class AjoutOeuvrePanel extends JPanel {
 
-    private Connection conn;
+    private Connection conn = ConnectionDB.getConn();
 
     private JTextField titre;
     private JComboBox<Categorie> comboCategorie;
@@ -28,24 +23,12 @@ class AjoutOeuvrePanel extends JPanel {
     private JComboBox<Support> comboSupports;
     private JButton version;
     private JComboBox<Version> comboVersions;
+    private JPanel morceauxPanel;
     private JPanel consolePanel;
+    private JComboBox<Console> comboConsoles;
 
 
     AjoutOeuvrePanel() {
-
-        conn = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-
-            String url = "jdbc:postgresql://127.0.0.1:5432/projet_mediatheque";
-            String user = "postgres";
-            String passwd = "root";
-
-            conn = getConnection(url, user, passwd);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Connection to database failed", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
 
         this.setLayout(new GridLayout(10, 1));
 
@@ -96,6 +79,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
+        origin.addActionListener(e -> new InsertionOrigin());
         originLabel.setLabelFor(origin);
         originPanel.add(originLabel);
         originPanel.add(origin);
@@ -122,6 +106,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
+        support.addActionListener(e -> new InsertionSupport());
         supportLabel.setLabelFor(support);
         supportPanel.add(supportLabel);
         supportPanel.add(support);
@@ -197,7 +182,7 @@ class AjoutOeuvrePanel extends JPanel {
 coder sélection des morceaux
  */
 
-        JPanel morceauxPanel = new JPanel(new GridLayout(1, 2));
+        morceauxPanel = new JPanel(new GridLayout(1, 2));
 
         JLabel morceauxLabel = new JLabel("Morceaux : ");
 
@@ -207,6 +192,7 @@ coder sélection des morceaux
         morceauxLabel.setLabelFor(morceaux);
         morceauxPanel.add(morceauxLabel);
         morceauxPanel.add(morceaux);
+        morceauxPanel.setVisible(false);
         this.add(morceauxPanel);
 
 /*
@@ -232,6 +218,7 @@ coder sélection des personalities
 
         JButton console = new JButton("Console+");
         console.setPreferredSize(new Dimension(100, 30));
+        console.addActionListener(e -> new InsertionConsole());
         consoleLabel.setLabelFor(console);
         consolePanel.add(consoleLabel);
         consolePanel.add(console);
@@ -240,15 +227,11 @@ coder sélection des personalities
             Statement state = conn.createStatement();
             ResultSet recordedConsoles = state.executeQuery("select * from console");
             if (recordedConsoles.next()) {
-                JComboBox<String> comboConsoles = new JComboBox<>();
+                comboConsoles = new JComboBox<>();
                 do {
-                    comboConsoles.addItem(recordedConsoles.getString("name_c"));
+                    comboConsoles.addItem(new Console(recordedConsoles.getInt("id_c"), recordedConsoles.getString("name_c")));
                 } while (recordedConsoles.next());
                 consolePanel.add(comboConsoles);
-                consolePanel.setBackground(Color.red);
-
-                System.out.println("iuzbrg");
-
             }
             this.add(consolePanel);
             consolePanel.setVisible(false);
@@ -268,6 +251,12 @@ coder sélection des personalities
                 consolePanel.setVisible(true);
             } else {
                 consolePanel.setVisible(false);
+            }
+
+            if (comboCategorie.getSelectedItem().toString().equals("Album")) {
+                morceauxPanel.setVisible(true);
+            } else {
+                morceauxPanel.setVisible(false);
             }
         }
     }

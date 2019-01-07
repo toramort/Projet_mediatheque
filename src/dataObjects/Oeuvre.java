@@ -15,11 +15,11 @@ public abstract class Oeuvre {
     private Origine origine;
     private List<Version> versions;
     private Support support;
-    private List<Evaluation> Evaluations;
+    private List<Evaluation> evaluations;
     private Console console;
     private Categorie categorie;
 
-    public Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Console console, Categorie categorie) {
+    Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Console console, Categorie categorie) {
         this.id_oeuvre = id_oeuvre;
         this.title = title;
         this.date_ajout = date_ajout;
@@ -30,7 +30,7 @@ public abstract class Oeuvre {
         this.origine = origine;
         this.versions = versions;
         this.support = support;
-        Evaluations = evaluations;
+        this.evaluations = evaluations;
         this.console = console;
         this.categorie = categorie;
     }
@@ -116,11 +116,11 @@ public abstract class Oeuvre {
     }
 
     public List<Evaluation> getEvaluations() {
-        return Evaluations;
+        return evaluations;
     }
 
     public void setEvaluations(List<Evaluation> evaluations) {
-        Evaluations = evaluations;
+        this.evaluations = evaluations;
     }
 
     public Console getConsole() {
