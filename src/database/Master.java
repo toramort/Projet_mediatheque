@@ -87,7 +87,7 @@ public class Master {
         List<Personality> temp = null;
         try {
             Statement state = conn.createStatement();
-            ResultSet result = state.executeQuery("SELECT * from version");
+            ResultSet result = state.executeQuery("SELECT * from personality");
             temp = new ArrayList<>();
             while (result.next()) {
                 temp.add(new Personality(result.getInt("id_p"), result.getString("firstname"), result.getString("lastname"), result.getString("surname")));
@@ -98,6 +98,51 @@ public class Master {
         return temp;
     }
 
+    public static List<Job> readJobs() {
+        List<Job> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from job");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Job(result.getInt("id_job"), result.getString("name_job")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+
+    public static List<Genre> readGenres() {
+        List<Genre> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from genre");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Genre(result.getInt("id_g"), result.getString("genre")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    public static List<Console> readConsole() {
+        List<Console> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from console");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Console(result.getInt("id_c"), result.getString("name_c")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
     public static Connection getConn() {
         return conn;
     }

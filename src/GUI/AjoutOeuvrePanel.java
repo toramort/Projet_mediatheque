@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,15 @@ class AjoutOeuvrePanel extends JPanel {
     private JComboBox<Support> comboSupports = new JComboBox<>();
     private JButton version;
     private JComboBox<Version> comboVersions = new JComboBox<>();
+    private JComboBox<Genre> comboGenre = new JComboBox<>();
+    private JButton genre;
     private JPanel morceauxPanel;
+    private JPanel personalitiesPanel;
+    private JComboBox<Personality> comboPersonalities = new JComboBox<>();
+    private JButton personalities;
+    private JPanel jobsPanel;
+    private JComboBox<Job> comboJobs = new JComboBox<>();
+    private JButton job;
     private JPanel consolePanel;
     private JComboBox<Console> comboConsoles = new JComboBox<>();
     private JPanel finishedPanel;
@@ -61,8 +67,23 @@ class AjoutOeuvrePanel extends JPanel {
         for (Categorie cat : Master.readCategorie()) {
             comboCategorie.addItem(cat);
         }
+        comboCategorie.addActionListener(e -> {
+            if (comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
+                this.add(consolePanel);
+            } else {
+                this.remove(consolePanel);
+            }
 
+            if (comboCategorie.getSelectedItem().toString().equals("Album")) {
+                this.add(morceauxPanel);
+            } else {
+                this.remove(morceauxPanel);
+            }
+            this.revalidate();
+            this.repaint();
+        });
 
+        categoriePanel.setBorder(BorderFactory.createTitledBorder("Categorie"));
         categorieLabel.setLabelFor(comboCategorie);
         categoriePanel.add(comboCategorie);
         this.add(categoriePanel);
@@ -75,7 +96,7 @@ class AjoutOeuvrePanel extends JPanel {
         origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
         origin.addActionListener(e -> {
-            String newNameOrigin = ConfirmNewValue.showDialog();
+            String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
             if (!newNameOrigin.equals("")) {
                 Origine nvOrigine = new Origine(newNameOrigin);
                 nvOrigine.create();
@@ -105,7 +126,7 @@ class AjoutOeuvrePanel extends JPanel {
         support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
-            String newNameSupport = ConfirmNewValue.showDialog();
+            String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
             if (!newNameSupport.equals("")) {
                 Support nvSupport = new Support(newNameSupport);
                 nvSupport.create();
@@ -146,7 +167,7 @@ class AjoutOeuvrePanel extends JPanel {
         }
 
         version.addActionListener(e -> {
-            String newNameVersion = ConfirmNewValue.showDialog();
+            String newNameVersion = ConfirmNewValue.showDialogSimpleTextField();
             if (!newNameVersion.equals("")) {
                 Version nvVersion = new Version(newNameVersion);
                 nvVersion.create();
@@ -164,25 +185,32 @@ class AjoutOeuvrePanel extends JPanel {
         JLabel genreLabel = new JLabel("Genre : ");
 
         JButton genre = new JButton("Genre+");
-        genre.setPreferredSize(new Dimension(100, 30));
+
+        List<Genre> reqGenre = Master.readGenres();
+        for (Genre pers : reqGenre) {
+            comboGenre.addItem(pers);
+        }
+
+        if (comboGenre.getItemCount() == 0) {
+            genrePanel.setBackground(Color.red);
+        }
+
+        genre.addActionListener(e -> {
+            String newNameGenre = ConfirmNewValue.showDialogSimpleTextField();
+            if (!newNameGenre.equals("")) {
+                Genre nvGenre = new Genre(newNameGenre);
+                nvGenre.create();
+                comboGenre.addItem(nvGenre);
+                comboGenre.setBackground(null);
+            }
+        });
         genreLabel.setLabelFor(genre);
         genrePanel.add(genreLabel);
+        genrePanel.add(comboGenre);
         genrePanel.add(genre);
+        this.add(genrePanel);
 
-        try {
-            Statement state = conn.createStatement();
-            ResultSet recordedgenres = state.executeQuery("select * from genre");
-            if (recordedgenres.next()) {
-                JComboBox<String> comboGenres = new JComboBox<>();
-                do {
-                    comboGenres.addItem(recordedgenres.getString("genre"));
-                } while (recordedgenres.next());
-                genrePanel.add(comboGenres);
-                this.add(genrePanel);
-            }
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
-        }
+
 
 /*
 coder sélection des morceaux
@@ -198,27 +226,69 @@ coder sélection des morceaux
         morceauxLabel.setLabelFor(morceaux);
         morceauxPanel.add(morceauxLabel);
         morceauxPanel.add(morceaux);
-        morceauxPanel.setVisible(false);
-        this.add(morceauxPanel);
 
-/*
-coder sélection des personalities
- */
 
-        JPanel personalitiesPanel = new JPanel(new GridLayout(1, 2));
+        // ===== personalitites =====
+
+        personalitiesPanel = new JPanel(new GridLayout(1, 2));
 
         JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
-        JButton personalities = new JButton("Auteurs");
+        personalities = new JButton("Auteurs");
+
+        List<Personality> reqPers = Master.readPersonality();
+        for (Personality pers : reqPers) {
+            comboPersonalities.addItem(pers);
+        }
+
+        if (comboPersonalities.getItemCount() == 0) {
+            personalitiesPanel.setBackground(Color.red);
+        }
+
         personalities.addActionListener(e -> {
-            DialogPersonalities sd = new DialogPersonalities(null, "Test test");
-            sd.setVisible(true);
-            System.out.println("Value: " + sd.getValue1());
+            List<String> newParamPersonality = ConfirmNewValue.showDialogTripleField();
+            if (!newParamPersonality.equals(new ArrayList<>())) {
+                Personality nvPersonality = new Personality(newParamPersonality.get(0), newParamPersonality.get(1), newParamPersonality.get(2));
+                nvPersonality.create();
+                comboPersonalities.addItem(nvPersonality);
+                personalitiesPanel.setBackground(null);
+            }
         });
         personalitiesLabel.setLabelFor(personalities);
         personalitiesPanel.add(personalitiesLabel);
+        personalitiesPanel.add(comboPersonalities);
         personalitiesPanel.add(personalities);
         this.add(personalitiesPanel);
+
+
+        //===== jobs =====
+        jobsPanel = new JPanel(new GridLayout(1, 3));
+        JLabel jobsLabel = new JLabel("Rôle : ");
+        job = new JButton("Rôle+");
+
+        List<Job> reqJobs = Master.readJobs();
+        for (Job job1 : reqJobs) {
+            comboJobs.addItem(job1);
+        }
+
+        if (comboJobs.getItemCount() == 0) {
+            jobsPanel.setBackground(Color.red);
+        }
+
+        job.addActionListener(e -> {
+            String newNameJob = ConfirmNewValue.showDialogSimpleTextField();
+            if (!newNameJob.equals("")) {
+                Job nvJob = new Job(newNameJob);
+                nvJob.create();
+                comboJobs.addItem(nvJob);
+                jobsPanel.setBackground(null);
+            }
+        });
+
+        jobsPanel.add(jobsLabel);
+        jobsPanel.add(comboJobs);
+        jobsPanel.add(job);
+        this.add(jobsPanel);
 
         //===== console =====
         consolePanel = new JPanel(new GridLayout(1, 3));
@@ -226,33 +296,27 @@ coder sélection des personalities
         JLabel consoleLabel = new JLabel("Console : ");
 
         JButton console = new JButton("Console+");
-        console.setPreferredSize(new Dimension(100, 30));
-        console.addActionListener(e -> {
-            String newNameConsole = JOptionPane.showInputDialog(null, "Veuillez entrer une nouvelle console", "Nouvelle console", JOptionPane.QUESTION_MESSAGE);
-            Console nvConsole = new Console(newNameConsole);
-            nvConsole.create();
-            comboConsoles.addItem(nvConsole);
-        });
-        consoleLabel.setLabelFor(console);
-        consolePanel.add(consoleLabel);
-        consolePanel.add(console);
-
-        try {
-            Statement state = conn.createStatement();
-            ResultSet recordedConsoles = state.executeQuery("select * from console");
-            if (recordedConsoles.next()) {
-                comboConsoles = new JComboBox<>();
-                do {
-                    comboConsoles.addItem(new Console(recordedConsoles.getInt("id_c"), recordedConsoles.getString("name_c")));
-                } while (recordedConsoles.next());
-                consolePanel.add(comboConsoles);
-            }
-            this.add(consolePanel);
-            consolePanel.setVisible(false);
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
+        List<Console> reqCons = Master.readConsole();
+        for (Console cons : reqCons) {
+            comboConsoles.addItem(cons);
         }
 
+        if (comboConsoles.getItemCount() == 0) {
+            consolePanel.setBackground(Color.red);
+        }
+
+        console.addActionListener(e -> {
+            String newNameConsole = ConfirmNewValue.showDialogSimpleTextField();
+            if (!newNameConsole.equals("")) {
+                Console nvConsole = new Console(newNameConsole);
+                nvConsole.create();
+                comboConsoles.addItem(nvConsole);
+                comboConsoles.setBackground(null);
+            }
+        });
+        consolePanel.add(consoleLabel);
+        consolePanel.add(comboConsoles);
+        consolePanel.add(console);
         //===== finished =====
 
         finishedPanel = new JPanel(new GridLayout(1, 2));
@@ -265,39 +329,27 @@ coder sélection des personalities
 
 
         JButton boutonEnvoyer = new JButton("Envoyer");
+        boutonEnvoyer.addActionListener(new FinalListener());
         this.add(boutonEnvoyer);
 
     }
 
-    class categorieListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (comboCategorie.getSelectedIndex() == 3) {
-                consolePanel.setVisible(true);
-            } else {
-                consolePanel.setVisible(false);
-            }
 
-            if (comboCategorie.getSelectedItem().toString().equals("Album")) {
-                morceauxPanel.setVisible(true);
-            } else {
-                morceauxPanel.setVisible(false);
-            }
-        }
-    }
-/*
-    class titreListener implements ActionListener{
+    class FinalListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String titlestr = titre.getText();
-            String
-            String query = "INSERT INTO oeuvre(title, date_ajout, date_oeuvre, finished, id_p, id_o, id_c, id_s) VALUES (?)";
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setString(1, titre_film.getText());
+            String finalTitre = titre.getText();
+            Categorie finalCat = (Categorie) comboCategorie.getSelectedItem();
+            Origine finalOrigin = (Origine) comboOrigins.getSelectedItem();
+            Support finalSupport = (Support) comboSupports.getSelectedItem();
+            Version finalversion = (Version) comboVersions.getSelectedItem();
+            Genre finalgenre = (Genre) comboGenre.getSelectedItem();
+            Personality finalPersonality = (Personality) comboPersonalities.getSelectedItem();
+            Job finalJob = (Job) comboJobs.getSelectedItem();
+            String finalFinished = String.valueOf(finished.isSelected());
 
-            statement.execute();
         }
     }
-    */
+
 }

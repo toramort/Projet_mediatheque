@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,30 @@ public abstract class Oeuvre implements DatabaseObject {
         this.categorie = categorie;
     }
 
+    @Override
+    public void create() {
+        try {
+            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_o, id_c, id_s) VALUES (?,?,NOW(),?,?,?,?,?,?)";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, this.id_oeuvre);
+            statement.setString(2, title);
+
+            statement.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
 
     public int getId_oeuvre() {
         return id_oeuvre;
