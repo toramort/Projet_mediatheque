@@ -19,7 +19,7 @@ public class Master {
             conn = getConnection(url, user, passwd);
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Connection to database failed", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Connection to database failed", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
