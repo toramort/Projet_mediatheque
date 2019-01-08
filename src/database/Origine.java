@@ -6,8 +6,8 @@ import java.sql.Statement;
 
 public class Origine implements DatabaseObject {
 
-    private String name_o;
     private int id_o;
+    private String name_o;
 
     public Origine(String name_o) {
         this.name_o = name_o;
@@ -22,7 +22,7 @@ public class Origine implements DatabaseObject {
 
     }
 
-    public Origine(String name_o, int id_o) {
+    public Origine(int id_o, String name_o) {
         this.name_o = name_o;
         this.id_o = id_o;
     }

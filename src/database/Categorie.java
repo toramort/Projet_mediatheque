@@ -1,6 +1,6 @@
 package database;
 
-public class Categorie implements DatabaseObject<Categorie> {
+public class Categorie implements DatabaseObject {
 
     private int id_c;
     private String name_c;

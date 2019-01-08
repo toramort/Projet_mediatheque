@@ -16,10 +16,23 @@ public abstract class Oeuvre implements DatabaseObject {
     private List<Version> versions;
     private Support support;
     private List<Evaluation> evaluations;
-    private Console console;
     private Categorie categorie;
 
-    Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Console console, Categorie categorie) {
+    public Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, Categorie categorie) {
+        this.id_oeuvre = id_oeuvre;
+        this.title = title;
+        this.date_ajout = date_ajout;
+        this.date_oeuvre = date_oeuvre;
+        this.finished = finished;
+        this.personalities = personalities;
+        this.genres = genres;
+        this.origine = origine;
+        this.versions = versions;
+        this.support = support;
+        this.categorie = categorie;
+    }
+
+    Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Categorie categorie) {
         this.id_oeuvre = id_oeuvre;
         this.title = title;
         this.date_ajout = date_ajout;
@@ -31,7 +44,6 @@ public abstract class Oeuvre implements DatabaseObject {
         this.versions = versions;
         this.support = support;
         this.evaluations = evaluations;
-        this.console = console;
         this.categorie = categorie;
     }
 
@@ -122,14 +134,6 @@ public abstract class Oeuvre implements DatabaseObject {
 
     public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
-    }
-
-    public Console getConsole() {
-        return console;
-    }
-
-    public void setConsole(Console console) {
-        this.console = console;
     }
 
     public Categorie getCategorie() {

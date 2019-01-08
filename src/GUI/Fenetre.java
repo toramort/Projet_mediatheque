@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 
 class Fenetre extends JFrame {
+
     private String[] listContent = {"oeuvre+", "album", "game", "film", "livre"};
 
     private int indice = 0;
@@ -15,7 +16,7 @@ class Fenetre extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        JPanel container = new JPanelWithBackground("resources/images/blurred-background-2.jpg");
+        JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
 
         JPanel containerMenu = new JPanel();

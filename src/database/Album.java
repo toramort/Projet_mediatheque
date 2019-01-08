@@ -9,7 +9,7 @@ public class Album extends Oeuvre {
     private int id_album;
 
     public Album(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Console console, Categorie categorie, List<Morceau> morceaux, int id_album) {
-        super(id_oeuvre, title, date_ajout, date_oeuvre, finished, personalities, genres, origine, versions, support, evaluations, console, categorie);
+        super(id_oeuvre, title, date_ajout, date_oeuvre, finished, personalities, genres, origine, versions, support, evaluations, categorie);
         this.morceaux = morceaux;
         this.id_album = id_album;
     }
@@ -137,16 +137,6 @@ public class Album extends Oeuvre {
     @Override
     public void setEvaluations(List<Evaluation> evaluations) {
         super.setEvaluations(evaluations);
-    }
-
-    @Override
-    public Console getConsole() {
-        return super.getConsole();
-    }
-
-    @Override
-    public void setConsole(Console console) {
-        super.setConsole(console);
     }
 
     @Override

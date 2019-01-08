@@ -10,6 +10,13 @@ public class Personality {
     private String surname;
     private List<Job> jobs; //checkbox jobs boite de dialogue
 
+    public Personality(int id_personality, String firstname, String lastname, String surname) {
+        this.id_personality = id_personality;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.surname = surname;
+    }
+
     public Personality(int id_personality, String firstname, String lastname, String surname, List<Job> jobs) {
         this.id_personality = id_personality;
         this.firstname = firstname;

@@ -2,8 +2,8 @@ package database;
 
 import java.sql.Connection;
 
-public interface DatabaseObject<T> {
-    Connection conn = DBMaster.getConn();
+public interface DatabaseObject {
+    Connection conn = Master.getConn();
 
     void create();
 

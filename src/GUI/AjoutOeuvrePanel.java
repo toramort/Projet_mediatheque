@@ -10,27 +10,34 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 class AjoutOeuvrePanel extends JPanel {
 
-    private Connection conn = DBMaster.getConn();
+    private Connection conn = Master.getConn();
 
     private JTextField titre;
     private JComboBox<Categorie> comboCategorie = new JComboBox<>();
     private JButton origin;
-    private JComboBox<Origine> comboOrigins;
+    private JComboBox<Origine> comboOrigins = new JComboBox<>();
     private JButton support;
-    private JComboBox<Support> comboSupports;
+    private JComboBox<Support> comboSupports = new JComboBox<>();
     private JButton version;
-    private JComboBox<Version> comboVersions;
+    private JComboBox<Version> comboVersions = new JComboBox<>();
     private JPanel morceauxPanel;
     private JPanel consolePanel;
-    private JComboBox<Console> comboConsoles;
+    private JComboBox<Console> comboConsoles = new JComboBox<>();
+    private JPanel finishedPanel;
+    private JLabel finishedLabel;
+    private JCheckBox finished;
 
 
     AjoutOeuvrePanel() {
 
-        this.setLayout(new GridLayout(10, 1));
+        GridLayout mainLayout = new GridLayout(11, 1);
+        mainLayout.setVgap(7);
+        this.setLayout(mainLayout);
 
         //===== titre =====
         JPanel titrePanel = new JPanel();
@@ -51,9 +58,10 @@ class AjoutOeuvrePanel extends JPanel {
         JLabel categorieLabel = new JLabel("Catégorie : ");
         categoriePanel.add(categorieLabel);
 
-        for (Categorie cat : DBMaster.readCategorie()) {
+        for (Categorie cat : Master.readCategorie()) {
             comboCategorie.addItem(cat);
         }
+
 
         categorieLabel.setLabelFor(comboCategorie);
         categoriePanel.add(comboCategorie);
@@ -67,29 +75,27 @@ class AjoutOeuvrePanel extends JPanel {
         origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
         origin.addActionListener(e -> {
-            String newNameOrigin = JOptionPane.showInputDialog(null, "Veuillez entrer une nouvelle origine", "Nouvelle origine", JOptionPane.QUESTION_MESSAGE);
-            Origine nvOrigine = new Origine(newNameOrigin);
-            nvOrigine.create();
-            comboOrigins.addItem(nvOrigine);
+            String newNameOrigin = ConfirmNewValue.showDialog();
+            if (!newNameOrigin.equals("")) {
+                Origine nvOrigine = new Origine(newNameOrigin);
+                nvOrigine.create();
+                comboOrigins.addItem(nvOrigine);
+            }
         });
+        List<Origine> reqOri = Master.readOrigin();
+        for (Origine ori : reqOri) {
+            comboOrigins.addItem(ori);
+        }
+
         originLabel.setLabelFor(origin);
         originPanel.add(originLabel);
-        originPanel.add(origin);
 
-        try {
-            Statement state = conn.createStatement();
-            ResultSet recordedOrigins = state.executeQuery("select * from origin");
-            if (recordedOrigins.next()) {
-                comboOrigins = new JComboBox<>();
-                do {
-                    comboOrigins.addItem(new Origine(recordedOrigins.getString("name_o"), recordedOrigins.getInt("id_o")));
-                } while (recordedOrigins.next());
-                originPanel.add(comboOrigins);
-                this.add(originPanel);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!reqOri.equals(new ArrayList())) {
+            originPanel.add(comboOrigins);
+            System.out.println(reqOri);
         }
+        originPanel.add(origin);
+        this.add(originPanel);
 
         //===== support =====
         JPanel supportPanel = new JPanel(new GridLayout(1, 3));
@@ -99,29 +105,26 @@ class AjoutOeuvrePanel extends JPanel {
         support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
-            String newNameSupport = JOptionPane.showInputDialog(null, "Veuillez entrer un nouveau support", "Nouveau support", JOptionPane.QUESTION_MESSAGE);
-            Support nvSupport = new Support(newNameSupport);
-            nvSupport.create();
-            comboSupports.addItem(nvSupport);
+            String newNameSupport = ConfirmNewValue.showDialog();
+            if (!newNameSupport.equals("")) {
+                Support nvSupport = new Support(newNameSupport);
+                nvSupport.create();
+                comboSupports.addItem(nvSupport);
+            }
         });
+
         supportLabel.setLabelFor(support);
         supportPanel.add(supportLabel);
-        supportPanel.add(support);
 
-        try {
-            Statement state = conn.createStatement();
-            ResultSet recordedSupports = state.executeQuery("select * from support");
-            if (recordedSupports.next()) {
-                comboSupports = new JComboBox<>();
-                do {
-                    comboSupports.addItem(new Support(recordedSupports.getInt("id_s"), recordedSupports.getString("name_s")));
-                } while (recordedSupports.next());
-                supportPanel.add(comboSupports);
-                this.add(supportPanel);
-            }
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
+        List<Support> reqSupp = Master.readSupport();
+        for (Support supp : reqSupp) {
+            comboSupports.addItem(supp);
         }
+        if (!reqSupp.equals(new ArrayList<>())) {
+            supportPanel.add(comboSupports);
+        }
+        supportPanel.add(support);
+        this.add(supportPanel);
 
         //===== version =====
         JPanel versionPanel = new JPanel(new GridLayout(1, 3));
@@ -132,22 +135,28 @@ class AjoutOeuvrePanel extends JPanel {
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
         versionPanel.add(versionLabel);
-        versionPanel.add(version);
 
-        try {
-            Statement state = conn.createStatement();
-            ResultSet recordedVersions = state.executeQuery("select * from version");
-            if (recordedVersions.next()) {
-                comboVersions = new JComboBox<>();
-                do {
-                    comboVersions.addItem(new Version(recordedVersions.getInt("id_v"), recordedVersions.getString("version")));
-                } while (recordedVersions.next());
-                versionPanel.add(comboVersions);
-                this.add(versionPanel);
-            }
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
+        List<Version> reqVer = Master.readVersion();
+        for (Version vers : reqVer) {
+            comboVersions.addItem(vers);
         }
+
+        if (comboVersions.getItemCount() == 0) {
+            versionPanel.setBackground(Color.red);
+        }
+
+        version.addActionListener(e -> {
+            String newNameVersion = ConfirmNewValue.showDialog();
+            if (!newNameVersion.equals("")) {
+                Version nvVersion = new Version(newNameVersion);
+                nvVersion.create();
+                comboVersions.addItem(nvVersion);
+                versionPanel.setBackground(null);
+            }
+        });
+        versionPanel.add(comboVersions);
+        versionPanel.add(version);
+        this.add(versionPanel);
 
         //===== genre =====
         JPanel genrePanel = new JPanel(new GridLayout(1, 3));
@@ -200,9 +209,12 @@ coder sélection des personalities
 
         JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
-        //JButton personalities = new JButton("Auteurs");
-        //personalities.addActionListener(e -> JOptionPane.showMessageDialog(null, "BOITE DE DIALOGUE AJOUT MULTIPLE DE PERSONALITIES, CRéATION DE PERSONNALITIES", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
-        JTextField personalities = new JTextField();
+        JButton personalities = new JButton("Auteurs");
+        personalities.addActionListener(e -> {
+            DialogPersonalities sd = new DialogPersonalities(null, "Test test");
+            sd.setVisible(true);
+            System.out.println("Value: " + sd.getValue1());
+        });
         personalitiesLabel.setLabelFor(personalities);
         personalitiesPanel.add(personalitiesLabel);
         personalitiesPanel.add(personalities);
@@ -240,6 +252,17 @@ coder sélection des personalities
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
+
+        //===== finished =====
+
+        finishedPanel = new JPanel(new GridLayout(1, 2));
+        finishedLabel = new JLabel("Terminé : ");
+        finished = new JCheckBox();
+        finishedLabel.setLabelFor(finished);
+        finishedPanel.add(finishedLabel);
+        finishedPanel.add(finished);
+        this.add(finishedPanel);
+
 
         JButton boutonEnvoyer = new JButton("Envoyer");
         this.add(boutonEnvoyer);
