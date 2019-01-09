@@ -1,30 +1,24 @@
 package database;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 public class Film extends Oeuvre {
 
-    public Film(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, Categorie categorie) {
-        super(id_oeuvre, title, date_ajout, date_oeuvre, finished, personalities, genres, origine, versions, support, categorie);
-    }
-
-    public Film(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Categorie categorie) {
-        super(id_oeuvre, title, date_ajout, date_oeuvre, finished, personalities, genres, origine, versions, support, evaluations, categorie);
-    }
-
-    @Override
-    public void create() {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void delete() {
-
+    /**
+     * CONSTRUCTEUR NOUVELLE OEUVRE
+     * ID et DATE_AJOUT AUTOGENERES
+     *
+     * @param title       Titre de l'oeuvre
+     * @param date_oeuvre Date de l'oeuvre
+     * @param finished    Complétude
+     * @param personality Auteur de l'oeuvre
+     * @param genres      Genre
+     * @param origine     Origine
+     * @param versions    Version
+     * @param support     Support
+     * @param categorie   Categorie
+     */
+    public Film(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version versions, Support support, Categorie categorie) {
+        super(title, date_oeuvre, finished, personality, genres, origine, versions, support, categorie);
     }
 }

@@ -4,10 +4,13 @@ package GUI;
 import database.*;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,8 @@ class AjoutOeuvrePanel extends JPanel {
     private JPanel jobsPanel;
     private JComboBox<Job> comboJobs = new JComboBox<>();
     private JButton job;
+    private JPanel datePanel;
+    private JFormattedTextField dateField;
     private JPanel consolePanel;
     private JComboBox<Console> comboConsoles = new JComboBox<>();
     private JPanel finishedPanel;
@@ -103,6 +108,7 @@ class AjoutOeuvrePanel extends JPanel {
                 comboOrigins.addItem(nvOrigine);
             }
         });
+
         List<Origine> reqOri = Master.readOrigin();
         for (Origine ori : reqOri) {
             comboOrigins.addItem(ori);
@@ -290,6 +296,27 @@ coder sélection des morceaux
         jobsPanel.add(job);
         this.add(jobsPanel);
 
+
+        //===== date =====
+        datePanel = new JPanel(new GridLayout(1, 2));
+        JLabel dateLabel = new JLabel("Date : ");
+        try {
+            MaskFormatter dateMask = new MaskFormatter("####-##-##");
+            dateField = new JFormattedTextField(dateMask);
+        } catch (ParseException e) {
+            System.out.println(e.getErrorOffset());
+        }
+        Font font1 = new Font("SansSerif", Font.BOLD, 20);
+        dateField.setLocation(5, 5);
+        dateField.setSize(150, 20);
+        dateField.setFont(font1);
+        dateField.setHorizontalAlignment(JTextField.CENTER);
+
+        datePanel.add(dateLabel);
+        datePanel.add(dateField);
+        this.add(datePanel);
+
+
         //===== console =====
         consolePanel = new JPanel(new GridLayout(1, 3));
 
@@ -339,16 +366,33 @@ coder sélection des morceaux
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String finalTitre = titre.getText();
             Categorie finalCat = (Categorie) comboCategorie.getSelectedItem();
+            String finalTitre = titre.getText();
             Origine finalOrigin = (Origine) comboOrigins.getSelectedItem();
             Support finalSupport = (Support) comboSupports.getSelectedItem();
             Version finalversion = (Version) comboVersions.getSelectedItem();
             Genre finalgenre = (Genre) comboGenre.getSelectedItem();
             Personality finalPersonality = (Personality) comboPersonalities.getSelectedItem();
             Job finalJob = (Job) comboJobs.getSelectedItem();
-            String finalFinished = String.valueOf(finished.isSelected());
+            LocalDate finalDate = stringToLocaldate(dateField.getText());
+            boolean finalFinished = finished.isSelected();
 
+            switch (finalCat.getName_c()) {
+                case "Film": {
+                    Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
+                    nvOeuvre.create();
+
+                }
+            }
+
+
+        }
+
+        public LocalDate stringToLocaldate(String date) {
+            int y = Integer.valueOf(date.substring(0, 4));
+            int m = Integer.valueOf(date.substring(5, 7));
+            int d = Integer.valueOf(date.substring(8, 10));
+            return LocalDate.of(y, m, d);
         }
     }
 

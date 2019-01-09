@@ -1,31 +1,59 @@
 package database;
 
+import javax.swing.*;
 import java.sql.PreparedStatement;
-import java.util.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 public abstract class Oeuvre implements DatabaseObject {
 
     private int id_oeuvre;
     private String title;
-    private Date date_ajout;
-    private Date date_oeuvre;
+    private LocalDate date_ajout;
+    private LocalDate date_oeuvre;
     private boolean finished;
-    private List<Personality> personalities;
-    private List<Genre> genres;
+    private Personality personality;
+    private Genre genres;
     private Origine origine;
-    private List<Version> versions;
+    private Version versions;
     private Support support;
     private List<Evaluation> evaluations;
     private Categorie categorie;
 
-    public Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, Categorie categorie) {
-        this.id_oeuvre = id_oeuvre;
+
+    Oeuvre() {
+    }
+
+    /**
+     * CONSTRUCTEUR NOUVELLE OEUVRE
+     * ID et DATE_AJOUT AUTOGENERES
+     *
+     * @param title       Titre de l'oeuvre
+     * @param date_oeuvre Date de l'oeuvre
+     * @param finished    Complétude
+     * @param personality Auteur de l'oeuvre
+     * @param genres      Genre
+     * @param origine     Origine
+     * @param versions    Version
+     * @param support     Support
+     * @param categorie   Categorie
+     */
+    public Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version versions, Support support, Categorie categorie) {
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT MAX(id) as max_id from oeuvre ");
+            result.next();
+            this.id_oeuvre = result.getInt("max_id") + 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.title = title;
-        this.date_ajout = date_ajout;
+        this.date_ajout = LocalDate.now();
         this.date_oeuvre = date_oeuvre;
         this.finished = finished;
-        this.personalities = personalities;
+        this.personality = personality;
         this.genres = genres;
         this.origine = origine;
         this.versions = versions;
@@ -33,31 +61,25 @@ public abstract class Oeuvre implements DatabaseObject {
         this.categorie = categorie;
     }
 
-    Oeuvre(int id_oeuvre, String title, Date date_ajout, Date date_oeuvre, boolean finished, List<Personality> personalities, List<Genre> genres, Origine origine, List<Version> versions, Support support, List<Evaluation> evaluations, Categorie categorie) {
-        this.id_oeuvre = id_oeuvre;
-        this.title = title;
-        this.date_ajout = date_ajout;
-        this.date_oeuvre = date_oeuvre;
-        this.finished = finished;
-        this.personalities = personalities;
-        this.genres = genres;
-        this.origine = origine;
-        this.versions = versions;
-        this.support = support;
-        this.evaluations = evaluations;
-        this.categorie = categorie;
-    }
 
     @Override
     public void create() {
         try {
-            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_o, id_c, id_s) VALUES (?,?,NOW(),?,?,?,?,?,?)";
+            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_o, id_c, id_s) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, this.id_oeuvre);
             statement.setString(2, title);
-
+            statement.setObject(3, date_ajout);
+            statement.setObject(4, date_oeuvre);
+            statement.setBoolean(5, finished);
+            statement.setInt(6, personality.getId_personality());
+            statement.setInt(7, origine.getId_o());
+            statement.setInt(8, categorie.getId_c());
+            statement.setInt(9, support.getId_s());
             statement.execute();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de l'oeuvre",
+                "Erreur", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -73,99 +95,4 @@ public abstract class Oeuvre implements DatabaseObject {
 
     }
 
-    public int getId_oeuvre() {
-        return id_oeuvre;
-    }
-
-    public void setId_oeuvre(int id_oeuvre) {
-        this.id_oeuvre = id_oeuvre;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getDate_ajout() {
-        return date_ajout;
-    }
-
-    public void setDate_ajout(Date date_ajout) {
-        this.date_ajout = date_ajout;
-    }
-
-    public Date getDate_oeuvre() {
-        return date_oeuvre;
-    }
-
-    public void setDate_oeuvre(Date date_oeuvre) {
-        this.date_oeuvre = date_oeuvre;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public List<Personality> getPersonalities() {
-        return personalities;
-    }
-
-    public void setPersonalities(List<Personality> personalities) {
-        this.personalities = personalities;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public Origine getOrigine() {
-        return origine;
-    }
-
-    public void setOrigine(Origine origine) {
-        this.origine = origine;
-    }
-
-    public List<Version> getVersions() {
-        return versions;
-    }
-
-    public void setVersions(List<Version> versions) {
-        this.versions = versions;
-    }
-
-    public Support getSupport() {
-        return support;
-    }
-
-    public void setSupport(Support support) {
-        this.support = support;
-    }
-
-    public List<Evaluation> getEvaluations() {
-        return evaluations;
-    }
-
-    public void setEvaluations(List<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
-
-    public Categorie getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(Categorie categorie) {
-        this.categorie = categorie;
-    }
 }
