@@ -8,39 +8,24 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 class AjoutOeuvrePanel extends JPanel {
-
-    private Connection conn = Master.getConn();
-
     private JTextField titre;
     private JComboBox<Categorie> comboCategorie = new JComboBox<>();
-    private JButton origin;
     private JComboBox<Origine> comboOrigins = new JComboBox<>();
-    private JButton support;
     private JComboBox<Support> comboSupports = new JComboBox<>();
-    private JButton version;
     private JComboBox<Version> comboVersions = new JComboBox<>();
     private JComboBox<Genre> comboGenre = new JComboBox<>();
-    private JButton genre;
     private JPanel morceauxPanel;
     private JPanel personalitiesPanel;
     private JComboBox<Personality> comboPersonalities = new JComboBox<>();
-    private JButton personalities;
-    private JPanel jobsPanel;
-    private JComboBox<Job> comboJobs = new JComboBox<>();
-    private JButton job;
-    private JPanel datePanel;
     private JFormattedTextField dateField;
     private JPanel consolePanel;
     private JComboBox<Console> comboConsoles = new JComboBox<>();
-    private JPanel finishedPanel;
-    private JLabel finishedLabel;
     private JCheckBox finished;
 
 
@@ -73,7 +58,7 @@ class AjoutOeuvrePanel extends JPanel {
             comboCategorie.addItem(cat);
         }
         comboCategorie.addActionListener(e -> {
-            if (comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
+            if (comboCategorie.getSelectedItem().toString().equals("Jeu-Vidéo")) {
                 this.add(consolePanel);
             } else {
                 this.remove(consolePanel);
@@ -98,7 +83,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel originLabel = new JLabel("Origine : ");
 
-        origin = new JButton("Origin+");
+        JButton origin = new JButton("Origin+");
         origin.setPreferredSize(new Dimension(100, 30));
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -106,6 +91,7 @@ class AjoutOeuvrePanel extends JPanel {
                 Origine nvOrigine = new Origine(newNameOrigin);
                 nvOrigine.create();
                 comboOrigins.addItem(nvOrigine);
+                originPanel.setBackground(null);
             }
         });
 
@@ -117,9 +103,8 @@ class AjoutOeuvrePanel extends JPanel {
         originLabel.setLabelFor(origin);
         originPanel.add(originLabel);
 
-        if (!reqOri.equals(new ArrayList())) {
-            originPanel.add(comboOrigins);
-            System.out.println(reqOri);
+        if (comboOrigins.getItemCount() == 0) {
+            originPanel.setBackground(Color.red);
         }
         originPanel.add(origin);
         this.add(originPanel);
@@ -129,7 +114,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel supportLabel = new JLabel("Support : ");
 
-        support = new JButton("Support+");
+        JButton support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
             String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
@@ -137,6 +122,7 @@ class AjoutOeuvrePanel extends JPanel {
                 Support nvSupport = new Support(newNameSupport);
                 nvSupport.create();
                 comboSupports.addItem(nvSupport);
+                supportPanel.setBackground(null);
             }
         });
 
@@ -147,9 +133,10 @@ class AjoutOeuvrePanel extends JPanel {
         for (Support supp : reqSupp) {
             comboSupports.addItem(supp);
         }
-        if (!reqSupp.equals(new ArrayList<>())) {
-            supportPanel.add(comboSupports);
+        if (comboSupports.getItemCount() == 0) {
+            supportPanel.setBackground(Color.red);
         }
+        supportPanel.add(comboSupports);
         supportPanel.add(support);
         this.add(supportPanel);
 
@@ -158,7 +145,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel versionLabel = new JLabel("Version : ");
 
-        version = new JButton("Version+");
+        JButton version = new JButton("Version+");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
         versionPanel.add(versionLabel);
@@ -207,7 +194,7 @@ class AjoutOeuvrePanel extends JPanel {
                 Genre nvGenre = new Genre(newNameGenre);
                 nvGenre.create();
                 comboGenre.addItem(nvGenre);
-                comboGenre.setBackground(null);
+                genrePanel.setBackground(null);
             }
         });
         genreLabel.setLabelFor(genre);
@@ -240,7 +227,7 @@ coder sélection des morceaux
 
         JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
-        personalities = new JButton("Auteurs");
+        JButton personalities = new JButton("Auteurs");
 
         List<Personality> reqPers = Master.readPersonality();
         for (Personality pers : reqPers) {
@@ -252,10 +239,11 @@ coder sélection des morceaux
         }
 
         personalities.addActionListener(e -> {
-            List<String> newParamPersonality = ConfirmNewValue.showDialogTripleField();
+            List newParamPersonality = ConfirmNewValue.showDialogTripleField();
             if (!newParamPersonality.equals(new ArrayList<>())) {
-                Personality nvPersonality = new Personality(newParamPersonality.get(0), newParamPersonality.get(1), newParamPersonality.get(2));
+                Personality nvPersonality = new Personality((String) newParamPersonality.get(0), (String) newParamPersonality.get(1), (String) newParamPersonality.get(2), (Job) newParamPersonality.get(3));
                 nvPersonality.create();
+                nvPersonality.createAssocJob();
                 comboPersonalities.addItem(nvPersonality);
                 personalitiesPanel.setBackground(null);
             }
@@ -266,39 +254,8 @@ coder sélection des morceaux
         personalitiesPanel.add(personalities);
         this.add(personalitiesPanel);
 
-
-        //===== jobs =====
-        jobsPanel = new JPanel(new GridLayout(1, 3));
-        JLabel jobsLabel = new JLabel("Rôle : ");
-        job = new JButton("Rôle+");
-
-        List<Job> reqJobs = Master.readJobs();
-        for (Job job1 : reqJobs) {
-            comboJobs.addItem(job1);
-        }
-
-        if (comboJobs.getItemCount() == 0) {
-            jobsPanel.setBackground(Color.red);
-        }
-
-        job.addActionListener(e -> {
-            String newNameJob = ConfirmNewValue.showDialogSimpleTextField();
-            if (!newNameJob.equals("")) {
-                Job nvJob = new Job(newNameJob);
-                nvJob.create();
-                comboJobs.addItem(nvJob);
-                jobsPanel.setBackground(null);
-            }
-        });
-
-        jobsPanel.add(jobsLabel);
-        jobsPanel.add(comboJobs);
-        jobsPanel.add(job);
-        this.add(jobsPanel);
-
-
         //===== date =====
-        datePanel = new JPanel(new GridLayout(1, 2));
+        JPanel datePanel = new JPanel(new GridLayout(1, 2));
         JLabel dateLabel = new JLabel("Date : ");
         try {
             MaskFormatter dateMask = new MaskFormatter("####-##-##");
@@ -344,10 +301,12 @@ coder sélection des morceaux
         consolePanel.add(consoleLabel);
         consolePanel.add(comboConsoles);
         consolePanel.add(console);
+
+
         //===== finished =====
 
-        finishedPanel = new JPanel(new GridLayout(1, 2));
-        finishedLabel = new JLabel("Terminé : ");
+        JPanel finishedPanel = new JPanel(new GridLayout(1, 2));
+        JLabel finishedLabel = new JLabel("Terminé : ");
         finished = new JCheckBox();
         finishedLabel.setLabelFor(finished);
         finishedPanel.add(finishedLabel);
@@ -373,19 +332,28 @@ coder sélection des morceaux
             Version finalversion = (Version) comboVersions.getSelectedItem();
             Genre finalgenre = (Genre) comboGenre.getSelectedItem();
             Personality finalPersonality = (Personality) comboPersonalities.getSelectedItem();
-            Job finalJob = (Job) comboJobs.getSelectedItem();
-            LocalDate finalDate = stringToLocaldate(dateField.getText());
+            LocalDate finalDate = null;
+            try {
+                finalDate = stringToLocaldate(dateField.getText());
+            } catch (NumberFormatException e1) {
+                JOptionPane.showMessageDialog(null, "Remplissez bien la date !",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
             boolean finalFinished = finished.isSelected();
-
             switch (finalCat.getName_c()) {
                 case "Film": {
                     Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
                     nvOeuvre.create();
 
                 }
+                case "Livre": {
+                    Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
+                    nvOeuvre.create();
+                }
+                case "Jeu-Vidéo": {
+
+                }
             }
-
-
         }
 
         public LocalDate stringToLocaldate(String date) {

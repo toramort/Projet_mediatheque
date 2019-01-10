@@ -52,4 +52,12 @@ public class Job implements DatabaseObject {
     public String toString() {
         return name_job;
     }
+
+    public String getName_job() {
+        return name_job;
+    }
+
+    public int getId_job() {
+        return id_job;
+    }
 }

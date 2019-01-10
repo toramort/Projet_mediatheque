@@ -40,7 +40,7 @@ public abstract class Oeuvre implements DatabaseObject {
      * @param support     Support
      * @param categorie   Categorie
      */
-    public Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version versions, Support support, Categorie categorie) {
+    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version versions, Support support, Categorie categorie) {
         try {
             Statement state = conn.createStatement();
             ResultSet result = state.executeQuery("SELECT MAX(id) as max_id from oeuvre ");
