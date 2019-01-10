@@ -83,7 +83,11 @@ class AjoutOeuvrePanel extends JPanel {
 
         JLabel originLabel = new JLabel("Origine : ");
 
-        JButton origin = new JButton("Origin+");
+        BoutonAdd origin = new BoutonAdd();
+        origin.setBounds(620, 205, 25, 25);
+        origin.setBorderPainted(false);
+
+
         origin.setPreferredSize(new Dimension(100, 30));
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -106,6 +110,7 @@ class AjoutOeuvrePanel extends JPanel {
         if (comboOrigins.getItemCount() == 0) {
             originPanel.setBackground(Color.red);
         }
+        originPanel.add(comboOrigins);
         originPanel.add(origin);
         this.add(originPanel);
 
@@ -333,6 +338,10 @@ coder sélection des morceaux
             Genre finalgenre = (Genre) comboGenre.getSelectedItem();
             Personality finalPersonality = (Personality) comboPersonalities.getSelectedItem();
             LocalDate finalDate = null;
+            Console finalConsole = null;
+            if (AjoutOeuvrePanel.this.consolePanel.isVisible()) {
+                finalConsole = (Console) comboConsoles.getSelectedItem();
+            }
             try {
                 finalDate = stringToLocaldate(dateField.getText());
             } catch (NumberFormatException e1) {
@@ -340,23 +349,33 @@ coder sélection des morceaux
                     "Error", JOptionPane.ERROR_MESSAGE);
             }
             boolean finalFinished = finished.isSelected();
-            switch (finalCat.getName_c()) {
-                case "Film": {
+            finalCat.getId_c();
+            System.out.println(finalCat.getId_c());
+            switch (finalCat.getId_c()) {
+                case 1: {
                     Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
                     nvOeuvre.create();
 
-                }
-                case "Livre": {
-                    Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
-                    nvOeuvre.create();
-                }
-                case "Jeu-Vidéo": {
+                    System.out.println(finalCat.getName_c());
 
+                    break;
                 }
+                case 2: {
+
+                    break;
+                }
+                case 3:
+                    Livre nvOeuvre = new Livre(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
+                    nvOeuvre.create();
+                    System.out.println(nvOeuvre);
+                    break;
+                case 4:
+                    JeuVideo nvJeu = new JeuVideo(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat, finalConsole);
+                    break;
             }
         }
 
-        public LocalDate stringToLocaldate(String date) {
+        LocalDate stringToLocaldate(String date) {
             int y = Integer.valueOf(date.substring(0, 4));
             int m = Integer.valueOf(date.substring(5, 7));
             int d = Integer.valueOf(date.substring(8, 10));
@@ -365,3 +384,5 @@ coder sélection des morceaux
     }
 
 }
+
+

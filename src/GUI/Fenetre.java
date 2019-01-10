@@ -8,8 +8,6 @@ class Fenetre extends JFrame {
 
     private String[] listContent = {"oeuvre+", "album", "game", "film", "livre"};
 
-    private int indice = 0;
-
     Fenetre() {
         this.setTitle("Outil de gestion de médiathèque");
         this.setSize(1080, 720);

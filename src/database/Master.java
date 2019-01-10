@@ -1,7 +1,5 @@
 package database;
 
-import org.jetbrains.annotations.Contract;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -119,22 +117,6 @@ public class Master {
         return temp;
     }
 
-    public static List<Job> readJobsFromPersonality(int id_perso) {
-        List<Job> temp = null;
-        try {
-            Statement state = conn.createStatement();
-            ResultSet result = state.executeQuery("SELECT * from job inner join job_personality jp on job.id_job = jp.id_job inner join personality p on jp.id_p = p.id_p");
-            temp = new ArrayList<>();
-            while (result.next()) {
-                temp.add(new Job(result.getInt("id_job"), result.getString("name_job")));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return temp;
-    }
-
-
     public static List<Genre> readGenres() {
         List<Genre> temp = null;
         try {
@@ -164,8 +146,6 @@ public class Master {
         }
         return temp;
     }
-
-    @Contract(pure = true)
     public static Connection getConn() {
         return conn;
     }

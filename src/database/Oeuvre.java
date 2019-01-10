@@ -9,18 +9,18 @@ import java.util.List;
 
 public abstract class Oeuvre implements DatabaseObject {
 
-    private int id_oeuvre;
-    private String title;
-    private LocalDate date_ajout;
-    private LocalDate date_oeuvre;
-    private boolean finished;
-    private Personality personality;
-    private Genre genres;
-    private Origine origine;
-    private Version versions;
-    private Support support;
-    private List<Evaluation> evaluations;
-    private Categorie categorie;
+    protected int id_oeuvre;
+    protected String title;
+    protected LocalDate date_ajout;
+    protected LocalDate date_oeuvre;
+    protected boolean finished;
+    protected Personality personality;
+    protected Genre genres;
+    protected Origine origine;
+    protected Version versions;
+    protected Support support;
+    protected List<Evaluation> evaluations;
+    protected Categorie categorie;
 
 
     Oeuvre() {
@@ -62,6 +62,34 @@ public abstract class Oeuvre implements DatabaseObject {
     }
 
 
+    /**
+     * CONSTRUCTEUR SANS VERSION ET SANS EVALUATION
+     * POUR ALBUM
+     *
+     * @param id_oeuvre
+     * @param title
+     * @param date_ajout
+     * @param date_oeuvre
+     * @param finished
+     * @param personality
+     * @param genres
+     * @param origine
+     * @param support
+     * @param categorie
+     */
+    public Oeuvre(int id_oeuvre, String title, LocalDate date_ajout, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Support support, Categorie categorie) {
+        this.id_oeuvre = id_oeuvre;
+        this.title = title;
+        this.date_ajout = date_ajout;
+        this.date_oeuvre = date_oeuvre;
+        this.finished = finished;
+        this.personality = personality;
+        this.genres = genres;
+        this.origine = origine;
+        this.support = support;
+        this.categorie = categorie;
+    }
+
     @Override
     public void create() {
         try {
@@ -95,4 +123,51 @@ public abstract class Oeuvre implements DatabaseObject {
 
     }
 
+    public int getId_oeuvre() {
+        return id_oeuvre;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public LocalDate getDate_ajout() {
+        return date_ajout;
+    }
+
+    public LocalDate getDate_oeuvre() {
+        return date_oeuvre;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public Personality getPersonality() {
+        return personality;
+    }
+
+    public Genre getGenres() {
+        return genres;
+    }
+
+    public Origine getOrigine() {
+        return origine;
+    }
+
+    public Version getVersions() {
+        return versions;
+    }
+
+    public Support getSupport() {
+        return support;
+    }
+
+    public List<Evaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
 }
