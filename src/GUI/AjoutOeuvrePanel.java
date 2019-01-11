@@ -32,7 +32,7 @@ class AjoutOeuvrePanel extends JPanel {
     AjoutOeuvrePanel() {
 
         GridLayout mainLayout = new GridLayout(11, 1);
-        mainLayout.setVgap(7);
+        mainLayout.setVgap(25);
         this.setLayout(mainLayout);
 
         //===== titre =====
@@ -79,7 +79,7 @@ class AjoutOeuvrePanel extends JPanel {
         this.add(categoriePanel);
 
         //===== origine =====
-        JPanel originPanel = new JPanel(new GridLayout(1, 3));
+        JPanel originPanel = new JPanel(new GridLayout(1, 3, 150, 0));
 
         JLabel originLabel = new JLabel("Origine : ");
 

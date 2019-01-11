@@ -12,71 +12,85 @@ class Fenetre extends JFrame {
         this.setTitle("Outil de gestion de médiathèque");
         this.setSize(1080, 720);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//Container qui fait toute la dimension (container) du JFrame(pour pouvoir les moduler)
         JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
-
+//
+//Container de gauche (containerMenu) dans lequel il y a les boutons pour séléctionner la catégorie voulu
         JPanel containerMenu = new JPanel();
         containerMenu.setLayout(new GridBagLayout());
         containerMenu.setBackground(new Color(0xb5c5dd));
+//
+//Création du menu & positionnement
         JPanel menu = new JPanel();
         menu.setLayout(new GridLayout(5, 1));
-
-        JPanel main = new JPanel();
+//
+//
+        JPanel containerRight = new JPanel();
         CardLayout mainLayout = new CardLayout();
+//
+//Button pour séléctionner la catégorie à afficher dans 'menu'
 
+        JButton butAddOeuvre = new FlatButton("Oeuvre+");
+        butAddOeuvre.addActionListener(e -> mainLayout.show(containerRight, listContent[0]));
+        menu.add(butAddOeuvre);
 
-        JButton addOeuvre = new FlatButton("Oeuvre +");
-        addOeuvre.addActionListener(e -> mainLayout.next(main));
-        menu.add(addOeuvre);
+        JButton butMusique = new FlatButton("Musiques");
+        butMusique.addActionListener(e -> mainLayout.show(containerRight, listContent[1]));
+        menu.add(butMusique);
 
-        JButton album = new FlatButton("Albums");
-        album.addActionListener(e -> mainLayout.show(main, listContent[1]));
-        menu.add(album);
+        JButton butLivre = new FlatButton("Livres");
+        butLivre.addActionListener(e -> mainLayout.show(containerRight, listContent[2]));
+        menu.add(butLivre);
 
-        JButton game = new FlatButton("Music");
-        game.addActionListener(e -> mainLayout.show(main, listContent[2]));
-        menu.add(game);
-        JButton film = new FlatButton("film");
-        menu.add(film);
-        JButton book = new FlatButton("Livres");
-        menu.add(book);
+        JButton butFilm = new FlatButton("Films");
+        butFilm.addActionListener(e -> mainLayout.show(containerRight, listContent[3]));
+        menu.add(butFilm);
 
-        JPanel ajoutOeuvre = new AjoutOeuvrePanel();
+        JButton butJeu = new FlatButton("Jeux");
+        butJeu.addActionListener(e -> mainLayout.show(containerRight, listContent[4]));
+        menu.add(butJeu);
 
-        JPanel musics = new JPanel();
+//
+//On créer 4 JPanel (1 pour chaque catégorie)
 
-        JPanel games = new JPanel();
+        JPanel addOeuvre = new AjoutOeuvrePanel();
 
-        JPanel movies = new JPanel();
+        JPanel musique = new JPanel();
+        musique.setBackground(Color.RED);
+        //JButton butAjoutMusique = new JButton("Ajouter");
+        //JButton butModMusique = new JButton("Modofier");
+        //JButton butSuppMusique = new JButton("Supprimer");
 
-        JPanel books = new JPanel();
+        JPanel livre = new JPanel();
+        livre.setBackground(Color.GREEN);
 
+        JPanel film = new JPanel();
+        film.setBackground(Color.PINK);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
+        JPanel jeu = new JPanel();
+        jeu.setBackground(Color.BLUE);
 
-        containerMenu.add(menu);
+//
+        container.add(containerRight, BorderLayout.CENTER);
+        containerRight.setLayout(mainLayout);
+
+        containerRight.add(addOeuvre, listContent[0]);
+        containerRight.add(musique, listContent[1]);
+        containerRight.add(livre, listContent[2]);
+        containerRight.add(film, listContent[3]);
+        containerRight.add(jeu, listContent[4]);
+
+//
+//Enbrication des JPanel
+        this.add(container);
         container.add(containerMenu, BorderLayout.LINE_START);
-
-        main.add(ajoutOeuvre, listContent[0]);
-        main.add(musics, listContent[1]);
-        main.add(games, listContent[2]);
-        main.add(movies, listContent[3]);
-        main.add(books, listContent[4]);
-
-        main.setLayout(mainLayout);
-        container.add(main, BorderLayout.CENTER);
-
-        this.setContentPane(container);
+        containerMenu.add(menu);
 
         //Confirmation fermeture
         this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (JOptionPane.showConfirmDialog(null,
                     "Voulez-vous quitter l'application ?", "Fermeture",
@@ -88,5 +102,6 @@ class Fenetre extends JFrame {
         });
 
         this.setVisible(true);
+
     }
 }
