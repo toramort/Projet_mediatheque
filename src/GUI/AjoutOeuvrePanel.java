@@ -322,10 +322,16 @@ coder sélection des morceaux
     }
 
 
+    LocalDate stringToLocaldate(String date) {
+        int y = Integer.valueOf(date.substring(0, 4));
+        int m = Integer.valueOf(date.substring(5, 7));
+        int d = Integer.valueOf(date.substring(8, 10));
+        return LocalDate.of(y, m, d);
+    }
+
     class FinalListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             Categorie finalCat = (Categorie) comboCategorie.getSelectedItem();
             String finalTitre = titre.getText();
             Origine finalOrigin = (Origine) comboOrigins.getSelectedItem();
@@ -343,43 +349,56 @@ coder sélection des morceaux
             } catch (NumberFormatException e1) {
                 JOptionPane.showMessageDialog(null, "Remplissez bien la date !",
                     "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e2) {
+                JOptionPane.showMessageDialog(null, "Date erronée", "Error", JOptionPane.ERROR_MESSAGE);
             }
             boolean finalFinished = finished.isSelected();
-            finalCat.getId_c();
-            System.out.println(finished.isSelected());
-            System.out.println(finalDate);
+            String message = "Vouslez-vous créer l'oeuvre suivante avec ces paramètres ? " +
+                "\nTitre : " + finalTitre +
+                "\nCatégorie : " + finalCat +
+                "\nOrigine : " + finalOrigin +
+                "\nSupport : " + finalSupport +
+                "\nGenre : " + finalgenre +
+                "\nPersonne : " + finalPersonality +
+                "\nDate : " + finalDate;
+
+
             switch (finalCat.getId_c()) {
                 case 1: {
-                    Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
-                    nvOeuvre.create();
-                    System.out.println(finalCat.getName_c());
+                    message += "\nVersion : " + finalversion;
+                    if (JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
+                        nvOeuvre.create();
+                        System.out.println(finalCat.getName_c());
+                    }
                     break;
                 }
                 case 2: {
-                    Album nvAlbum = new Album(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalSupport, finalCat);
-                    nvAlbum.create();
+                    if (JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        Album nvAlbum = new Album(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalSupport, finalCat);
+                        nvAlbum.create();
+                    }
                     break;
+
                 }
                 case 3:
-                    Livre nvOeuvre = new Livre(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
-                    nvOeuvre.create();
-                    System.out.println(nvOeuvre);
+                    message += "\nVersion : " + finalversion;
+                    if (JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                        Livre nvOeuvre = new Livre(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
+                        nvOeuvre.create();
+                    }
                     break;
                 case 4:
-                    JeuVideo nvJeu = new JeuVideo(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat, finalConsole);
-                    nvJeu.create();
+                    message += "\nVersion : " + finalversion + "\nConsole : " + finalConsole;
+                    if (JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        JeuVideo nvJeu = new JeuVideo(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat, finalConsole);
+                        nvJeu.create();
+                    }
                     break;
             }
         }
-
-        LocalDate stringToLocaldate(String date) {
-            int y = Integer.valueOf(date.substring(0, 4));
-            int m = Integer.valueOf(date.substring(5, 7));
-            int d = Integer.valueOf(date.substring(8, 10));
-            return LocalDate.of(y, m, d);
-        }
     }
-
 }
 
 
