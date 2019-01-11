@@ -8,6 +8,8 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,70 +22,95 @@ class AjoutOeuvrePanel extends JPanel {
     private JComboBox<Support> comboSupports = new JComboBox<>();
     private JComboBox<Version> comboVersions = new JComboBox<>();
     private JComboBox<Genre> comboGenre = new JComboBox<>();
-    private JPanel versionPanel;
-    private JPanel morceauxPanel;
-    private JPanel personalitiesPanel;
     private JComboBox<Personality> comboPersonalities = new JComboBox<>();
     private JFormattedTextField dateField;
-    private JPanel consolePanel;
     private JComboBox<Console> comboConsoles = new JComboBox<>();
     private JCheckBox finished;
+    private JLabel consoleLabel;
+    private JLabel finishedLabel;
+    private JLabel titreLabel;
+    private JLabel originLabel;
+    private JButton origin;
+    private JLabel supportLabel;
+    private JButton support;
+    private JLabel versionLabel;
+    private JButton version;
+    private JLabel genreLabel;
+    ;
+    private JLabel personalitiesLabel;
+    private JLabel dateLabel;
+    private JButton genre;
+    private JButton personalities;
+    private JButton console;
+    private JButton boutonEnvoyer;
+    private JLabel title = new JLabel("Ajouter une oeuvre");
+
 
 
     AjoutOeuvrePanel() {
 
-        GridBagLayout mainLayout = new GridBagLayout();
+        try {
+            GraphicsEnvironment ge =
+                GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources/fonts/Staatliches-Regular.ttf")));
+        } catch (IOException | FontFormatException e) {
+            //Handle exception
+        }
+        title.setFont(new Font("Staatliches-Regular", Font.PLAIN, 24));
+        this.setLayout(null);
+        title.setBounds(650, 10, 250, 35);
+        this.add(title);
 
-
-        JPanel container = new JPanel();
-
-        GridLayout containerLayout = new GridLayout(11, 1);
-        containerLayout.setVgap(20);
-        container.setLayout(containerLayout);
 
         //===== titre =====
-        JPanel titrePanel = new JPanel(new GridLayout(1, 2, 75, 0));
 
-        JLabel titreLabel = new JLabel("Titre : ");
-        titrePanel.add(titreLabel);
+
+        titreLabel = new JLabel("Titre : ");
+        this.add(titreLabel);
 
         titre = new JTextField();
         titre.setPreferredSize(new Dimension(200, 30));
         titreLabel.setLabelFor(titre);
-        titrePanel.add(titre);
-        container.add(titrePanel);
+        this.add(titre);
 
         //==== catégorie =====
-        JPanel categoriePanel = new JPanel();
 
         for (Categorie cat : Categorie.read()) {
             comboCategorie.addItem(cat);
         }
+
         comboCategorie.addActionListener(e -> {
             if (comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
-                container.add(consolePanel);
+                this.add(console);
+                this.add(consoleLabel);
+                this.add(comboConsoles);
             } else {
-                container.remove(consolePanel);
+                this.remove(console);
+                this.remove(consoleLabel);
+                this.remove(comboConsoles);
             }
 
             if (comboCategorie.getSelectedItem().toString().equals("Album")) {
-                container.remove(versionPanel);
+                this.add(version);
+                this.add(versionLabel);
+                this.add(comboVersions);
             } else {
-                container.remove(morceauxPanel);
+                this.remove(version);
+                this.remove(versionLabel);
+                this.remove(comboVersions);
             }
-            container.revalidate();
-            container.repaint();
+            this.revalidate();
+            this.repaint();
         });
 
-        categoriePanel.setBorder(BorderFactory.createTitledBorder("Categorie"));
-        categoriePanel.add(comboCategorie);
-        container.add(categoriePanel);
+
+        this.add(comboCategorie);
 
         //===== origine =====
-        JPanel originPanel = new JPanel(new GridLayout(1, 3, 75, 0));
-        JLabel originLabel = new JLabel("Origine : ");
 
-        JButton origin = new JButton("Origine+");
+        originLabel = new JLabel("Origine : ");
+
+        origin = new JButton("Origine+");
 
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -91,7 +118,7 @@ class AjoutOeuvrePanel extends JPanel {
                 Origine nvOrigine = new Origine(newNameOrigin);
                 nvOrigine.create();
                 comboOrigins.addItem(nvOrigine);
-                originPanel.setBackground(null);
+                this.setBackground(null);
             }
         });
 
@@ -101,21 +128,20 @@ class AjoutOeuvrePanel extends JPanel {
         }
 
         originLabel.setLabelFor(origin);
-        originPanel.add(originLabel);
+        this.add(originLabel);
 
         if (comboOrigins.getItemCount() == 0) {
-            originPanel.setBackground(Color.red);
+            this.setBackground(Color.red);
         }
-        originPanel.add(comboOrigins);
-        originPanel.add(origin);
-        container.add(originPanel);
+        this.add(comboOrigins);
+        this.add(origin);
 
         //===== support =====
-        JPanel supportPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
-        JLabel supportLabel = new JLabel("Support : ");
 
-        JButton support = new JButton("Support+");
+        supportLabel = new JLabel("Support : ");
+
+        support = new JButton("Support+");
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
             String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
@@ -123,33 +149,30 @@ class AjoutOeuvrePanel extends JPanel {
                 Support nvSupport = new Support(newNameSupport);
                 nvSupport.create();
                 comboSupports.addItem(nvSupport);
-                supportPanel.setBackground(null);
+                supportLabel.setBackground(null);
             }
         });
 
         supportLabel.setLabelFor(support);
-        supportPanel.add(supportLabel);
+        this.add(supportLabel);
 
         List<Support> reqSupp = Support.read();
         for (Support supp : reqSupp) {
             comboSupports.addItem(supp);
         }
         if (comboSupports.getItemCount() == 0) {
-            supportPanel.setBackground(Color.red);
+            supportLabel.setBackground(Color.red);
         }
-        supportPanel.add(comboSupports);
-        supportPanel.add(support);
-        container.add(supportPanel);
+        this.add(comboSupports);
+        this.add(support);
 
         //===== version =====
-        versionPanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        versionLabel = new JLabel("Version : ");
 
-        JLabel versionLabel = new JLabel("Version : ");
-
-        JButton version = new JButton("Version+");
+        version = new JButton("Version+");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
-        versionPanel.add(versionLabel);
+        this.add(versionLabel);
 
         List<Version> reqVer = Version.read();
         for (Version vers : reqVer) {
@@ -157,7 +180,7 @@ class AjoutOeuvrePanel extends JPanel {
         }
 
         if (comboVersions.getItemCount() == 0) {
-            versionPanel.setBackground(Color.red);
+            this.setBackground(Color.red);
         }
 
         version.addActionListener(e -> {
@@ -166,19 +189,21 @@ class AjoutOeuvrePanel extends JPanel {
                 Version nvVersion = new Version(newNameVersion);
                 nvVersion.create();
                 comboVersions.addItem(nvVersion);
-                versionPanel.setBackground(null);
+                this.setBackground(null);
             }
         });
-        versionPanel.add(comboVersions);
-        versionPanel.add(version);
-        container.add(versionPanel);
+        this.add(comboVersions);
+        this.add(version);
 
         //===== genre =====
-        JPanel genrePanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        JPanel genrePanel;
+        genrePanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
-        JLabel genreLabel = new JLabel("Genre : ");
 
-        JButton genre = new JButton("Genre+");
+        genreLabel = new JLabel("Genre : ");
+
+
+        genre = new JButton("Genre+");
 
         List<Genre> reqGenre = Genre.read();
         for (Genre pers : reqGenre) {
@@ -199,36 +224,16 @@ class AjoutOeuvrePanel extends JPanel {
             }
         });
         genreLabel.setLabelFor(genre);
-        genrePanel.add(genreLabel);
-        genrePanel.add(comboGenre);
-        genrePanel.add(genre);
-        container.add(genrePanel);
-
-
-
-/*
-coder sélection des morceaux
- */
-
-        morceauxPanel = new JPanel(new GridLayout(1, 3, 75, 0));
-
-        JLabel morceauxLabel = new JLabel("Morceaux : ");
-
-        //JButton morceaux = new JButton("Morceaux");
-        //morceaux.addActionListener(e -> JOptionPane.showMessageDialog(container, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
-        JTextField morceaux = new JTextField();
-        morceauxLabel.setLabelFor(morceaux);
-        morceauxPanel.add(morceauxLabel);
-        morceauxPanel.add(morceaux);
-
+        this.add(genreLabel);
+        this.add(comboGenre);
+        this.add(genre);
 
         // ===== personalitites =====
 
-        personalitiesPanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        personalitiesLabel = new JLabel("Auteurs : ");
 
-        JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
-        JButton personalities = new JButton("Auteurs");
+        personalities = new JButton("Auteurs");
 
         List<Personality> reqPers = Personality.read();
         for (Personality pers : reqPers) {
@@ -236,7 +241,7 @@ coder sélection des morceaux
         }
 
         if (comboPersonalities.getItemCount() == 0) {
-            personalitiesPanel.setBackground(Color.red);
+            this.setBackground(Color.red);
         }
 
         personalities.addActionListener(e -> {
@@ -246,18 +251,17 @@ coder sélection des morceaux
                 nvPersonality.create();
                 nvPersonality.createAssocJob();
                 comboPersonalities.addItem(nvPersonality);
-                personalitiesPanel.setBackground(null);
+                this.setBackground(null);
             }
         });
         personalitiesLabel.setLabelFor(personalities);
-        personalitiesPanel.add(personalitiesLabel);
-        personalitiesPanel.add(comboPersonalities);
-        personalitiesPanel.add(personalities);
-        container.add(personalitiesPanel);
+        this.add(personalitiesLabel);
+        this.add(comboPersonalities);
+        this.add(personalities);
 
         //===== date =====
-        JPanel datePanel = new JPanel(new GridLayout(1, 2, 75, 0));
-        JLabel dateLabel = new JLabel("Date : ");
+
+        dateLabel = new JLabel("Date : ");
         try {
             MaskFormatter dateMask = new MaskFormatter("####-##-##");
             dateField = new JFormattedTextField(dateMask);
@@ -270,24 +274,18 @@ coder sélection des morceaux
         dateField.setFont(font1);
         dateField.setHorizontalAlignment(JTextField.CENTER);
 
-        datePanel.add(dateLabel);
-        datePanel.add(dateField);
-        container.add(datePanel);
+        this.add(dateLabel);
+        this.add(dateField);
 
 
         //===== console =====
-        consolePanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
-        JLabel consoleLabel = new JLabel("Console : ");
+        consoleLabel = new JLabel("Console : ");
 
-        JButton console = new JButton("Console+");
+        console = new JButton("Console+");
         List<Console> reqCons = Console.read();
         for (Console cons : reqCons) {
             comboConsoles.addItem(cons);
-        }
-
-        if (comboConsoles.getItemCount() == 0) {
-            consolePanel.setBackground(Color.red);
         }
 
         console.addActionListener(e -> {
@@ -299,26 +297,26 @@ coder sélection des morceaux
                 comboConsoles.setBackground(null);
             }
         });
-        consolePanel.add(consoleLabel);
-        consolePanel.add(comboConsoles);
-        consolePanel.add(console);
+        this.add(consoleLabel);
+        this.add(comboConsoles);
+        this.add(console);
 
 
         //===== finished =====
 
-        JPanel finishedPanel = new JPanel(new GridLayout(1, 2, 75, 0));
-        JLabel finishedLabel = new JLabel("Terminé : ");
+
+        finishedLabel = new JLabel("Terminé : ");
         finished = new JCheckBox();
         finishedLabel.setLabelFor(finished);
-        finishedPanel.add(finishedLabel);
-        finishedPanel.add(finished);
-        container.add(finishedPanel);
+        this.add(finishedLabel);
+        this.add(finished);
 
 
-        JButton boutonEnvoyer = new JButton("Envoyer");
+        boutonEnvoyer = new JButton("Envoyer");
         boutonEnvoyer.addActionListener(new FinalListener());
-        container.add(boutonEnvoyer);
-        this.add(container);
+        this.add(boutonEnvoyer);
+
+
 
     }
 
@@ -342,7 +340,7 @@ coder sélection des morceaux
             Personality finalPersonality = (Personality) comboPersonalities.getSelectedItem();
             LocalDate finalDate = null;
             Console finalConsole = null;
-            if (AjoutOeuvrePanel.this.consolePanel.isVisible()) {
+            if (AjoutOeuvrePanel.this.consoleLabel.isVisible()) {
                 finalConsole = (Console) comboConsoles.getSelectedItem();
             }
             try {
