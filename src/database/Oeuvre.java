@@ -1,5 +1,7 @@
 package database;
 
+import org.jetbrains.annotations.Nullable;
+
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,16 +12,38 @@ import java.util.List;
 public abstract class Oeuvre implements DatabaseObject {
 
     protected int id_oeuvre;
+
+
     protected String title;
+
+
     protected LocalDate date_ajout;
+
+
     protected LocalDate date_oeuvre;
+
+
     protected boolean finished;
+
+
     protected Personality personality;
+
+
     protected Genre genres;
+
+
     protected Origine origine;
-    protected Version versions;
+
+    @Nullable
+    protected Version version;
+
+
     protected Support support;
+
+
     protected List<Evaluation> evaluations;
+
+
     protected Categorie categorie;
 
 
@@ -36,11 +60,11 @@ public abstract class Oeuvre implements DatabaseObject {
      * @param personality Auteur de l'oeuvre
      * @param genres      Genre
      * @param origine     Origine
-     * @param versions    Version
+     * @param version    Version
      * @param support     Support
      * @param categorie   Categorie
      */
-    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version versions, Support support, Categorie categorie) {
+    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version version, Support support, Categorie categorie) {
         try {
             Statement state = conn.createStatement();
             ResultSet result = state.executeQuery("SELECT MAX(id) as max_id from oeuvre ");
@@ -56,7 +80,7 @@ public abstract class Oeuvre implements DatabaseObject {
         this.personality = personality;
         this.genres = genres;
         this.origine = origine;
-        this.versions = versions;
+        this.version = version;
         this.support = support;
         this.categorie = categorie;
     }
@@ -155,8 +179,8 @@ public abstract class Oeuvre implements DatabaseObject {
         return origine;
     }
 
-    public Version getVersions() {
-        return versions;
+    public Version getVersion() {
+        return version;
     }
 
     public Support getSupport() {

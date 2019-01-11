@@ -3,11 +3,13 @@ package GUI;
 import resources.images.GetIcon;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class BoutonAdd extends JButton {
+class BoutonAdd extends JButton {
     BoutonAdd() {
         super(GetIcon.icones.icon_plus.image());
         this.setBounds(620, 205, 25, 25);
         this.setBorderPainted(false);
+        this.setBackground(Color.WHITE);
     }
 }

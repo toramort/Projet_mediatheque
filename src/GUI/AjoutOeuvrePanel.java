@@ -58,7 +58,7 @@ class AjoutOeuvrePanel extends JPanel {
             comboCategorie.addItem(cat);
         }
         comboCategorie.addActionListener(e -> {
-            if (comboCategorie.getSelectedItem().toString().equals("Jeu-Vidéo")) {
+            if (comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
                 this.add(consolePanel);
             } else {
                 this.remove(consolePanel);
@@ -371,6 +371,7 @@ coder sélection des morceaux
                     break;
                 case 4:
                     JeuVideo nvJeu = new JeuVideo(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat, finalConsole);
+                    nvJeu.create();
                     break;
             }
         }
