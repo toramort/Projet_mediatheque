@@ -58,7 +58,7 @@ class Fenetre extends JFrame {
 
         JPanel addOeuvre = new AjoutOeuvrePanel();
 
-        JPanel musique = new JPanel();
+        JPanel musique = new AffOeuvrePanel();
         musique.setBackground(Color.RED);
         //JButton butAjoutMusique = new JButton("Ajouter");
         //JButton butModMusique = new JButton("Modofier");

@@ -31,13 +31,17 @@ class AjoutOeuvrePanel extends JPanel {
 
     AjoutOeuvrePanel() {
 
-        GridLayout mainLayout = new GridLayout(11, 1);
-        mainLayout.setVgap(25);
-        this.setLayout(mainLayout);
+        GridBagLayout mainLayout = new GridBagLayout();
+
+
+        JPanel container = new JPanel();
+
+        GridLayout containerLayout = new GridLayout(11, 1);
+        containerLayout.setVgap(20);
+        container.setLayout(containerLayout);
 
         //===== titre =====
-        JPanel titrePanel = new JPanel();
-        titrePanel.setLayout(new GridLayout(1, 2));
+        JPanel titrePanel = new JPanel(new GridLayout(1, 2, 75, 0));
 
         JLabel titreLabel = new JLabel("Titre : ");
         titrePanel.add(titreLabel);
@@ -46,49 +50,40 @@ class AjoutOeuvrePanel extends JPanel {
         titre.setPreferredSize(new Dimension(200, 30));
         titreLabel.setLabelFor(titre);
         titrePanel.add(titre);
-        this.add(titrePanel);
+        container.add(titrePanel);
 
         //==== catégorie =====
-        JPanel categoriePanel = new JPanel(new GridLayout(1, 3));
-
-        JLabel categorieLabel = new JLabel("Catégorie : ");
-        categoriePanel.add(categorieLabel);
+        JPanel categoriePanel = new JPanel();
 
         for (Categorie cat : Categorie.read()) {
             comboCategorie.addItem(cat);
         }
         comboCategorie.addActionListener(e -> {
             if (comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
-                this.add(consolePanel);
+                container.add(consolePanel);
             } else {
-                this.remove(consolePanel);
+                container.remove(consolePanel);
             }
 
             if (comboCategorie.getSelectedItem().toString().equals("Album")) {
-                this.add(morceauxPanel);
+                container.add(morceauxPanel);
             } else {
-                this.remove(morceauxPanel);
+                container.remove(morceauxPanel);
             }
-            this.revalidate();
-            this.repaint();
+            container.revalidate();
+            container.repaint();
         });
 
         categoriePanel.setBorder(BorderFactory.createTitledBorder("Categorie"));
-        categorieLabel.setLabelFor(comboCategorie);
         categoriePanel.add(comboCategorie);
-        this.add(categoriePanel);
+        container.add(categoriePanel);
 
         //===== origine =====
-        JPanel originPanel = new JPanel(new GridLayout(1, 3, 150, 0));
-
+        JPanel originPanel = new JPanel(new GridLayout(1, 3, 75, 0));
         JLabel originLabel = new JLabel("Origine : ");
 
-        BoutonAdd origin = new BoutonAdd();
-        origin.setBounds(620, 205, 25, 25);
-        origin.setBorderPainted(false);
+        JButton origin = new JButton("Origine+");
 
-
-        origin.setPreferredSize(new Dimension(100, 30));
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
             if (!newNameOrigin.equals("")) {
@@ -112,10 +107,10 @@ class AjoutOeuvrePanel extends JPanel {
         }
         originPanel.add(comboOrigins);
         originPanel.add(origin);
-        this.add(originPanel);
+        container.add(originPanel);
 
         //===== support =====
-        JPanel supportPanel = new JPanel(new GridLayout(1, 3));
+        JPanel supportPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel supportLabel = new JLabel("Support : ");
 
@@ -143,10 +138,10 @@ class AjoutOeuvrePanel extends JPanel {
         }
         supportPanel.add(comboSupports);
         supportPanel.add(support);
-        this.add(supportPanel);
+        container.add(supportPanel);
 
         //===== version =====
-        JPanel versionPanel = new JPanel(new GridLayout(1, 3));
+        JPanel versionPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel versionLabel = new JLabel("Version : ");
 
@@ -175,10 +170,10 @@ class AjoutOeuvrePanel extends JPanel {
         });
         versionPanel.add(comboVersions);
         versionPanel.add(version);
-        this.add(versionPanel);
+        container.add(versionPanel);
 
         //===== genre =====
-        JPanel genrePanel = new JPanel(new GridLayout(1, 3));
+        JPanel genrePanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel genreLabel = new JLabel("Genre : ");
 
@@ -206,7 +201,7 @@ class AjoutOeuvrePanel extends JPanel {
         genrePanel.add(genreLabel);
         genrePanel.add(comboGenre);
         genrePanel.add(genre);
-        this.add(genrePanel);
+        container.add(genrePanel);
 
 
 
@@ -214,12 +209,12 @@ class AjoutOeuvrePanel extends JPanel {
 coder sélection des morceaux
  */
 
-        morceauxPanel = new JPanel(new GridLayout(1, 2));
+        morceauxPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel morceauxLabel = new JLabel("Morceaux : ");
 
         //JButton morceaux = new JButton("Morceaux");
-        //morceaux.addActionListener(e -> JOptionPane.showMessageDialog(this, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
+        //morceaux.addActionListener(e -> JOptionPane.showMessageDialog(container, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
         JTextField morceaux = new JTextField();
         morceauxLabel.setLabelFor(morceaux);
         morceauxPanel.add(morceauxLabel);
@@ -228,7 +223,7 @@ coder sélection des morceaux
 
         // ===== personalitites =====
 
-        personalitiesPanel = new JPanel(new GridLayout(1, 2));
+        personalitiesPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
@@ -257,10 +252,10 @@ coder sélection des morceaux
         personalitiesPanel.add(personalitiesLabel);
         personalitiesPanel.add(comboPersonalities);
         personalitiesPanel.add(personalities);
-        this.add(personalitiesPanel);
+        container.add(personalitiesPanel);
 
         //===== date =====
-        JPanel datePanel = new JPanel(new GridLayout(1, 2));
+        JPanel datePanel = new JPanel(new GridLayout(1, 2, 75, 0));
         JLabel dateLabel = new JLabel("Date : ");
         try {
             MaskFormatter dateMask = new MaskFormatter("####-##-##");
@@ -276,11 +271,11 @@ coder sélection des morceaux
 
         datePanel.add(dateLabel);
         datePanel.add(dateField);
-        this.add(datePanel);
+        container.add(datePanel);
 
 
         //===== console =====
-        consolePanel = new JPanel(new GridLayout(1, 3));
+        consolePanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel consoleLabel = new JLabel("Console : ");
 
@@ -310,18 +305,19 @@ coder sélection des morceaux
 
         //===== finished =====
 
-        JPanel finishedPanel = new JPanel(new GridLayout(1, 2));
+        JPanel finishedPanel = new JPanel(new GridLayout(1, 2, 75, 0));
         JLabel finishedLabel = new JLabel("Terminé : ");
         finished = new JCheckBox();
         finishedLabel.setLabelFor(finished);
         finishedPanel.add(finishedLabel);
         finishedPanel.add(finished);
-        this.add(finishedPanel);
+        container.add(finishedPanel);
 
 
         JButton boutonEnvoyer = new JButton("Envoyer");
         boutonEnvoyer.addActionListener(new FinalListener());
-        this.add(boutonEnvoyer);
+        container.add(boutonEnvoyer);
+        this.add(container);
 
     }
 
