@@ -20,6 +20,7 @@ class AjoutOeuvrePanel extends JPanel {
     private JComboBox<Support> comboSupports = new JComboBox<>();
     private JComboBox<Version> comboVersions = new JComboBox<>();
     private JComboBox<Genre> comboGenre = new JComboBox<>();
+    private JPanel versionPanel;
     private JPanel morceauxPanel;
     private JPanel personalitiesPanel;
     private JComboBox<Personality> comboPersonalities = new JComboBox<>();
@@ -66,7 +67,7 @@ class AjoutOeuvrePanel extends JPanel {
             }
 
             if (comboCategorie.getSelectedItem().toString().equals("Album")) {
-                container.add(morceauxPanel);
+                container.remove(versionPanel);
             } else {
                 container.remove(morceauxPanel);
             }
@@ -141,7 +142,7 @@ class AjoutOeuvrePanel extends JPanel {
         container.add(supportPanel);
 
         //===== version =====
-        JPanel versionPanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        versionPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
         JLabel versionLabel = new JLabel("Version : ");
 

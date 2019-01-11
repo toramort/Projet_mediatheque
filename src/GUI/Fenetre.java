@@ -12,7 +12,7 @@ class Fenetre extends JFrame {
         this.setTitle("Outil de gestion de médiathèque");
         this.setSize(1080, 720);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 //
 //Container qui fait toute la dimension (container) du JFrame(pour pouvoir les moduler)
         JPanel container = new JPanel();
