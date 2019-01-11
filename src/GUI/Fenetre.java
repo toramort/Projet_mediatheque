@@ -21,7 +21,8 @@ class Fenetre extends JFrame {
 //Container de gauche (containerMenu) dans lequel il y a les boutons pour séléctionner la catégorie voulu
         JPanel containerMenu = new JPanel();
         containerMenu.setLayout(new GridBagLayout());
-        containerMenu.setBackground(new Color(0xb5c5dd));
+        containerMenu.setBackground(new Color(0xd6d6d6));
+        containerMenu.setBorder(BorderFactory.createLineBorder(Color.black, 3));
 //
 //Création du menu & positionnement
         JPanel menu = new JPanel();

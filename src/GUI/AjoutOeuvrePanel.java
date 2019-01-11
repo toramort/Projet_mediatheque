@@ -8,14 +8,13 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 class AjoutOeuvrePanel extends JPanel {
+
     private JTextField titre;
     private JComboBox<Categorie> comboCategorie = new JComboBox<>();
     private JComboBox<Origine> comboOrigins = new JComboBox<>();
@@ -36,7 +35,6 @@ class AjoutOeuvrePanel extends JPanel {
     private JLabel versionLabel;
     private JButton version;
     private JLabel genreLabel;
-    ;
     private JLabel personalitiesLabel;
     private JLabel dateLabel;
     private JButton genre;
@@ -44,22 +42,25 @@ class AjoutOeuvrePanel extends JPanel {
     private JButton console;
     private JButton boutonEnvoyer;
     private JLabel title = new JLabel("Ajouter une oeuvre");
+    private JLabel categorieLabel = new JLabel("Catégorie");
 
 
 
     AjoutOeuvrePanel() {
 
-        try {
-            GraphicsEnvironment ge =
-                GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources/fonts/Staatliches-Regular.ttf")));
-        } catch (IOException | FontFormatException e) {
-            //Handle exception
-        }
-        title.setFont(new Font("Staatliches-Regular", Font.PLAIN, 24));
+
         this.setLayout(null);
-        title.setBounds(650, 10, 250, 35);
+        title.setFont(new Font("Staatliches", Font.PLAIN, 40));
+        title.setBounds(550, 10, 400, 50);
         this.add(title);
+
+        categorieLabel.setBounds(450, 150, 100, 35);
+        categorieLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        this.add(categorieLabel);
+
+        comboCategorie.setBounds(600, 150, 100, 35);
+
+        this.setBackground(Color.white);
 
 
         //===== titre =====
