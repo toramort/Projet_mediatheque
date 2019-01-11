@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Personality implements DatabaseObject {
 
@@ -69,6 +71,25 @@ public class Personality implements DatabaseObject {
 
     public Job getJobs() {
         return jobs;
+    }
+
+    public static List<Personality> read() {
+        List<Personality> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT personality.id_p, personality.firstname, personality.lastname, personality.surname, " +
+                "job.id_job, job.name_job from personality, job " +
+                "inner join job_personality jp on job.id_job = jp.id_job " +
+                "inner join personality p on jp.id_p = p.id_p");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Personality(result.getInt("id_p"), result.getString("firstname"), result.getString("lastname"), result.getString("surname"),
+                    new Job(result.getInt("id_job"), result.getString("name_job"))));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 
     @Override

@@ -3,6 +3,8 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Origine implements DatabaseObject {
 
@@ -38,6 +40,21 @@ public class Origine implements DatabaseObject {
     @Override
     public String toString() {
         return name_o;
+    }
+
+    public static List<Origine> read() {
+        List<Origine> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from origin");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Origine(result.getInt("id_o"), result.getString("name_o")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 
     @Override

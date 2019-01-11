@@ -3,6 +3,8 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Console implements DatabaseObject {
 
@@ -26,7 +28,20 @@ public class Console implements DatabaseObject {
         this.name_c = name_c;
     }
 
-
+    public static List<Console> read() {
+        List<Console> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from console");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Console(result.getInt("id_c"), result.getString("name_c")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
     @Override
     public void create() {
         try {

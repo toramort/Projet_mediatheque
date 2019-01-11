@@ -3,6 +3,8 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Job implements DatabaseObject {
 
@@ -24,6 +26,21 @@ public class Job implements DatabaseObject {
     public Job(int id_job, String name_job) {
         this.name_job = name_job;
         this.id_job = id_job;
+    }
+
+    public static List<Job> read() {
+        List<Job> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from job");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Job(result.getInt("id_job"), result.getString("name_job")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 
     @Override

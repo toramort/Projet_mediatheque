@@ -3,6 +3,8 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Support implements DatabaseObject {
     private int id_s;
@@ -36,6 +38,21 @@ public class Support implements DatabaseObject {
     @Override
     public String toString() {
         return name_s;
+    }
+
+    public static List<Support> read() {
+        List<Support> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from support");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Support(result.getInt("id_s"), result.getString("name_s")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 
     @Override

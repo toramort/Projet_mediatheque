@@ -87,12 +87,10 @@ public abstract class Oeuvre implements DatabaseObject {
 
 
     /**
-     * CONSTRUCTEUR SANS VERSION ET SANS EVALUATION
+     * CONSTRUCTEUR SANS VERSION ET SANS EVALUATION ET SANS ID
      * POUR ALBUM
      *
-     * @param id_oeuvre
      * @param title
-     * @param date_ajout
      * @param date_oeuvre
      * @param finished
      * @param personality
@@ -101,11 +99,10 @@ public abstract class Oeuvre implements DatabaseObject {
      * @param support
      * @param categorie
      */
-    public Oeuvre(int id_oeuvre, String title, LocalDate date_ajout, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Support support, Categorie categorie) {
-        this.id_oeuvre = id_oeuvre;
+    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Support support, Categorie categorie) {
         this.title = title;
-        this.date_ajout = date_ajout;
         this.date_oeuvre = date_oeuvre;
+        this.date_ajout = LocalDate.now();
         this.finished = finished;
         this.personality = personality;
         this.genres = genres;
@@ -117,7 +114,7 @@ public abstract class Oeuvre implements DatabaseObject {
     @Override
     public void create() {
         try {
-            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_o, id_c, id_s) VALUES (?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_o, id_v, id_c, id_s) VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, this.id_oeuvre);
             statement.setString(2, title);
@@ -126,8 +123,9 @@ public abstract class Oeuvre implements DatabaseObject {
             statement.setBoolean(5, finished);
             statement.setInt(6, personality.getId_personality());
             statement.setInt(7, origine.getId_o());
-            statement.setInt(8, categorie.getId_c());
-            statement.setInt(9, support.getId_s());
+            statement.setInt(8, version.getId_v());
+            statement.setInt(9, categorie.getId_c());
+            statement.setInt(10, support.getId_s());
             statement.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de l'oeuvre",

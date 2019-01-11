@@ -3,6 +3,8 @@ package database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Version implements DatabaseObject {
     private int id_v;
@@ -36,6 +38,21 @@ public class Version implements DatabaseObject {
     @Override
     public String toString() {
         return version;
+    }
+
+    public static List<Version> read() {
+        List<Version> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from version");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Version(result.getInt("id_v"), result.getString("version")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 
     @Override

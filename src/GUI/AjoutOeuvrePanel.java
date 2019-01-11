@@ -54,7 +54,7 @@ class AjoutOeuvrePanel extends JPanel {
         JLabel categorieLabel = new JLabel("Catégorie : ");
         categoriePanel.add(categorieLabel);
 
-        for (Categorie cat : Master.readCategorie()) {
+        for (Categorie cat : Categorie.read()) {
             comboCategorie.addItem(cat);
         }
         comboCategorie.addActionListener(e -> {
@@ -99,7 +99,7 @@ class AjoutOeuvrePanel extends JPanel {
             }
         });
 
-        List<Origine> reqOri = Master.readOrigin();
+        List<Origine> reqOri = Origine.read();
         for (Origine ori : reqOri) {
             comboOrigins.addItem(ori);
         }
@@ -134,7 +134,7 @@ class AjoutOeuvrePanel extends JPanel {
         supportLabel.setLabelFor(support);
         supportPanel.add(supportLabel);
 
-        List<Support> reqSupp = Master.readSupport();
+        List<Support> reqSupp = Support.read();
         for (Support supp : reqSupp) {
             comboSupports.addItem(supp);
         }
@@ -155,7 +155,7 @@ class AjoutOeuvrePanel extends JPanel {
         versionLabel.setLabelFor(version);
         versionPanel.add(versionLabel);
 
-        List<Version> reqVer = Master.readVersion();
+        List<Version> reqVer = Version.read();
         for (Version vers : reqVer) {
             comboVersions.addItem(vers);
         }
@@ -184,7 +184,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         JButton genre = new JButton("Genre+");
 
-        List<Genre> reqGenre = Master.readGenres();
+        List<Genre> reqGenre = Genre.read();
         for (Genre pers : reqGenre) {
             comboGenre.addItem(pers);
         }
@@ -234,7 +234,7 @@ coder sélection des morceaux
 
         JButton personalities = new JButton("Auteurs");
 
-        List<Personality> reqPers = Master.readPersonality();
+        List<Personality> reqPers = Personality.read();
         for (Personality pers : reqPers) {
             comboPersonalities.addItem(pers);
         }
@@ -285,7 +285,7 @@ coder sélection des morceaux
         JLabel consoleLabel = new JLabel("Console : ");
 
         JButton console = new JButton("Console+");
-        List<Console> reqCons = Master.readConsole();
+        List<Console> reqCons = Console.read();
         for (Console cons : reqCons) {
             comboConsoles.addItem(cons);
         }
@@ -350,18 +350,18 @@ coder sélection des morceaux
             }
             boolean finalFinished = finished.isSelected();
             finalCat.getId_c();
-            System.out.println(finalCat.getId_c());
+            System.out.println(finished.isSelected());
+            System.out.println(finalDate);
             switch (finalCat.getId_c()) {
                 case 1: {
                     Film nvOeuvre = new Film(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalversion, finalSupport, finalCat);
                     nvOeuvre.create();
-
                     System.out.println(finalCat.getName_c());
-
                     break;
                 }
                 case 2: {
-
+                    Album nvAlbum = new Album(finalTitre, finalDate, finalFinished, finalPersonality, finalgenre, finalOrigin, finalSupport, finalCat);
+                    nvAlbum.create();
                     break;
                 }
                 case 3:

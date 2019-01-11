@@ -1,7 +1,6 @@
 package GUI;
 
 import database.Job;
-import database.Master;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +39,7 @@ public class ConfirmNewValue extends JOptionPane {
         JLabel jobsLabel = new JLabel("Rôle : ");
         job = new JButton("Rôle+");
 
-        List<Job> reqJobs = Master.readJobs();
+        List<Job> reqJobs = Job.read();
         for (Job job1 : reqJobs) {
             comboJobs.addItem(job1);
         }
