@@ -4,7 +4,8 @@ import javax.swing.*;
 
 public class GetIcon {
     public enum icones {
-        icon_plus("boutonPlus.png");
+        icon_window("icon_poney.png");
+
 
         private Icon i;
 

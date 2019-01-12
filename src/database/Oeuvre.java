@@ -111,6 +111,24 @@ public abstract class Oeuvre implements DatabaseObject {
         this.categorie = categorie;
     }
 
+    /*
+    public static List<Oeuvre> read(){
+        List<Oeuvre> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from oeuvre");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Oeu(result.getInt("id_o"), result.getString("name_o")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+    */
+
+
     @Override
     public void create() {
         try {
