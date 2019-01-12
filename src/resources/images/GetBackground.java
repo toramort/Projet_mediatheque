@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class GetBackground {
     public enum background {
-        image_background("blurred-background-2.jpg");
+        image_background("moviebg.png");
 
         private Icon i;
 

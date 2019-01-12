@@ -1,9 +1,6 @@
 package database;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 040c38487bbce1e80b4c3a1cb6df83d139be0770
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
