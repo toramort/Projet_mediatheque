@@ -1,6 +1,5 @@
 package database;
 
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
@@ -34,7 +33,7 @@ public abstract class Oeuvre implements DatabaseObject {
 
     protected Origine origine;
 
-    @Nullable
+
     protected Version version;
 
 

@@ -49,18 +49,7 @@ class AjoutOeuvrePanel extends JPanel {
     AjoutOeuvrePanel() {
 
 
-        this.setLayout(null);
-        title.setFont(new Font("Staatliches", Font.PLAIN, 40));
-        title.setBounds(550, 10, 400, 50);
-        this.add(title);
 
-        categorieLabel.setBounds(450, 150, 100, 35);
-        categorieLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-        this.add(categorieLabel);
-
-        comboCategorie.setBounds(600, 150, 100, 35);
-
-        this.setBackground(Color.white);
 
 
         //===== titre =====
@@ -317,7 +306,59 @@ class AjoutOeuvrePanel extends JPanel {
         boutonEnvoyer.addActionListener(new FinalListener());
         this.add(boutonEnvoyer);
 
+        
 
+        this.setLayout(null);
+        title.setFont(new Font("Staatliches", Font.PLAIN, 40));
+        title.setBounds(550, 10, 400, 50);
+        this.add(title);
+
+        categorieLabel.setBounds(450, 150, 100, 35);
+        categorieLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        this.add(categorieLabel);
+
+        comboCategorie.setBounds(600, 150, 100, 35);
+
+        titreLabel.setBounds(450, 200, 100, 35);
+        titreLabel.setFont (new Font("Staatliches", Font.PLAIN, 20));
+        titre.setBounds(600, 200, 200, 35);
+
+        personalitiesLabel.setBounds(450,250,100,35);
+        personalitiesLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboPersonalities.setBounds(600, 250, 200, 35);
+        personalities.setBounds(810, 250, 200, 35);
+
+        genreLabel.setBounds(450, 300, 100, 35);
+        genreLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboGenre.setBounds(600,300,200,35);
+        genre.setBounds(810,300,200,35);
+
+        supportLabel.setBounds(450,350,100,35);
+        supportLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboSupports.setBounds(600,350,200,35);
+        support.setBounds(810,350,200,35);
+
+        versionLabel.setBounds(450,400,100,35);
+        versionLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboVersions.setBounds(600,400,200,35);
+        version.setBounds(810,400,200,35);
+
+        originLabel.setBounds(450,450,100,35);
+        originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboOrigins.setBounds(600,450,200,35);
+        origin.setBounds(810,450,200,35);
+
+        dateLabel.setBounds(450,500,100,35);
+        dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        dateField.setBounds(600,500,200,35);
+
+        finishedLabel.setBounds(450,550,100,35);
+        finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        finished.setBounds(790,560,20,20);
+
+
+
+        this.setBackground(Color.white);
 
     }
 
