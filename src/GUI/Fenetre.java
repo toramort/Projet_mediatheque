@@ -1,5 +1,7 @@
 package GUI;
 
+import resources.images.GetIcon;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -13,6 +15,8 @@ class Fenetre extends JFrame {
         this.setSize(1920, 1080);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        ImageIcon icon = (ImageIcon) GetIcon.icones.icon_window.image();
+        this.setIconImage(icon.getImage());
 //
 //Container qui fait toute la dimension (container) du JFrame(pour pouvoir les moduler)
         JPanel container = new JPanel();

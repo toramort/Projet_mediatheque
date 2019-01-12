@@ -1,6 +1,9 @@
 package database;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 040c38487bbce1e80b4c3a1cb6df83d139be0770
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,6 +112,24 @@ public abstract class Oeuvre implements DatabaseObject {
         this.support = support;
         this.categorie = categorie;
     }
+
+    /*
+    public static List<Oeuvre> read(){
+        List<Oeuvre> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from oeuvre");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Oeu(result.getInt("id_o"), result.getString("name_o")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+    */
+
 
     @Override
     public void create() {
