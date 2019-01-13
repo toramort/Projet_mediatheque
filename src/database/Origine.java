@@ -57,6 +57,20 @@ public class Origine implements DatabaseObject {
         return temp;
     }
 
+    public static Origine read(int id_origin) {
+        Origine temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from origin where id_o = " + id_origin);
+            result.next();
+            temp = (new Origine(result.getInt("id_o"), result.getString("name_o")));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
     @Override
     public void create() {
         try {

@@ -92,6 +92,24 @@ public class Personality implements DatabaseObject {
         return temp;
     }
 
+    public static Personality read(int id_personality) {
+        Personality temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT personality.id_p, personality.firstname, personality.lastname, personality.surname, " +
+                "job.id_job, job.name_job from personality, job " +
+                "inner join job_personality jp on job.id_job = jp.id_job " +
+                "inner join personality p on jp.id_p = p.id_p WHERE p.id_p = " + id_personality);
+            while (result.next()) {
+                temp = new Personality(result.getInt("id_p"), result.getString("firstname"), result.getString("lastname"), result.getString("surname"),
+                    new Job(result.getInt("id_job"), result.getString("name_job")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
     @Override
     public void create() {
         try {

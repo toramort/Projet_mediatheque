@@ -220,4 +220,32 @@ public abstract class Oeuvre implements DatabaseObject {
     public Categorie getCategorie() {
         return categorie;
     }
+
+    public void setId_oeuvre(int id_oeuvre) {
+        this.id_oeuvre = id_oeuvre;
+    }
+
+    public void setPersonality(Personality personality) {
+        this.personality = personality;
+    }
+
+    public void setGenres(Genre genres) {
+        this.genres = genres;
+    }
+
+    public void setOrigine(Origine origine) {
+        this.origine = origine;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
+    }
+
+    public void setSupport(Support support) {
+        this.support = support;
+    }
+
+    public void setEvaluations(List<Evaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
 }

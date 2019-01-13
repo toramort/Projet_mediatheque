@@ -55,6 +55,19 @@ public class Version implements DatabaseObject {
         return temp;
     }
 
+    public static Version read(int id_version) {
+        Version temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from version where id_v = " + id_version);
+            result.next();
+            temp = (new Version(result.getInt("id_v"), result.getString("version")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
     @Override
     public void create() {
         try {
