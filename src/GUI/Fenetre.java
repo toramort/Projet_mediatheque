@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.assets.FlatButton;
 import resources.images.GetIcon;
 
 import javax.swing.*;

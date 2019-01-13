@@ -1,6 +1,9 @@
 package GUI;
 
 
+import GUI.assets.ButtonAdd;
+import GUI.assets.FlatButton;
+import GUI.assets.FlatCombo;
 import database.*;
 
 import javax.swing.*;
@@ -16,14 +19,14 @@ import java.util.List;
 class AjoutOeuvrePanel extends JPanel {
 
     private JTextField titre;
-    private JComboBox<Categorie> comboCategorie = new JComboBox<>();
-    private JComboBox<Origine> comboOrigins = new JComboBox<>();
-    private JComboBox<Support> comboSupports = new JComboBox<>();
-    private JComboBox<Version> comboVersions = new JComboBox<>();
-    private JComboBox<Genre> comboGenre = new JComboBox<>();
-    private JComboBox<Personality> comboPersonalities = new JComboBox<>();
+    int spaceLine = 55;
+    private JComboBox<Categorie> comboCategorie = new FlatCombo<>();
+    private JComboBox<Origine> comboOrigins = new FlatCombo<>();
+    private JComboBox<Support> comboSupports = new FlatCombo<>();
+    private JComboBox<Version> comboVersions = new FlatCombo<>();
+    private JComboBox<Genre> comboGenre = new FlatCombo<>();
     private JFormattedTextField dateField;
-    private JComboBox<Console> comboConsoles = new JComboBox<>();
+    private JComboBox<Personality> comboPersonalities = new FlatCombo<>();
     private JCheckBox finished;
     private JLabel consoleLabel;
     private JLabel finishedLabel;
@@ -46,7 +49,7 @@ class AjoutOeuvrePanel extends JPanel {
     int posX = 400;
     int posY = 120;
     int spaceXCombo = 150;
-    int spaceLine = 65;
+    private JComboBox<Console> comboConsoles = new FlatCombo<>();
     int spaceXButton = 210;
     int dimComboX = 200;
     int dimComboY = 35;
@@ -82,44 +85,26 @@ class AjoutOeuvrePanel extends JPanel {
                 this.add(console);
                 this.add(consoleLabel);
                 this.add(comboConsoles);
-                originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+
+                originLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
                 originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-                comboOrigins.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
-                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
+                comboOrigins.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 7 * spaceLine, dimButtonX, dimButtonY);
 
-                dateLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+                dateLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
                 dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-                dateField.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+                dateField.setBounds(posX + spaceXCombo, posY + 8 * spaceLine, dimComboX, dimComboY);
 
-                finishedLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
+                finishedLabel.setBounds(posX, posY + 9 * spaceLine, 100, 35);
                 finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 8 * spaceLine + 5, 20, 20);
+                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 9 * spaceLine + 5, 20, 20);
 
-                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 9 * spaceLine, dimButtonX, dimButtonY);
+                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 10 * spaceLine, dimButtonX, dimButtonY);
             } else {
                 this.remove(console);
                 this.remove(consoleLabel);
                 this.remove(comboConsoles);
-                originLabel.setBounds(posX, posY + 5 * spaceLine, 100, 35);
-                originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-                comboOrigins.setBounds(posX + spaceXCombo, posY + 5 * spaceLine, dimComboX, dimComboY);
-                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 5 * spaceLine, dimButtonX, dimButtonY);
 
-                dateLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
-                dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-                dateField.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
-
-                finishedLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
-                finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 7 * spaceLine + 5, 20, 20);
-
-                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 8 * spaceLine, dimButtonX, dimButtonY);
-            }
-
-            if (comboCategorie.getSelectedItem().toString().equals("Album")) {
-                this.add(version);
-                this.add(versionLabel);
-                this.add(comboVersions);
                 originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
                 originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
                 comboOrigins.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
@@ -134,7 +119,9 @@ class AjoutOeuvrePanel extends JPanel {
                 finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 8 * spaceLine + 5, 20, 20);
 
                 boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 9 * spaceLine, dimButtonX, dimButtonY);
-            } else {
+            }
+
+            if (comboCategorie.getSelectedItem().toString().equals("Album")) {
                 this.remove(version);
                 this.remove(versionLabel);
                 this.remove(comboVersions);
@@ -153,7 +140,27 @@ class AjoutOeuvrePanel extends JPanel {
 
                 boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 8 * spaceLine, dimButtonX, dimButtonY);
 
+            } else if (!comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
+                this.add(version);
+                this.add(versionLabel);
+                this.add(comboVersions);
+                originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+                originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                comboOrigins.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
+
+                dateLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+                dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                dateField.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+
+                finishedLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
+                finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 8 * spaceLine + 5, 20, 20);
+
+                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 9 * spaceLine, dimButtonX, dimButtonY);
             }
+
+
             this.revalidate();
             this.repaint();
         });
@@ -165,7 +172,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         originLabel = new JLabel("Origine : ");
 
-        origin = new JButton("Origine+");
+        origin = new FlatButton("Origin+");
 
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -196,7 +203,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         supportLabel = new JLabel("Support : ");
 
-        support = new JButton("Support+");
+        support = new ButtonAdd();
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
             String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
@@ -224,7 +231,7 @@ class AjoutOeuvrePanel extends JPanel {
         //===== version =====
         versionLabel = new JLabel("Version : ");
 
-        version = new JButton("Version+");
+        version = new FlatButton("Version+");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
         this.add(versionLabel);
@@ -258,7 +265,7 @@ class AjoutOeuvrePanel extends JPanel {
         genreLabel = new JLabel("Genre : ");
 
 
-        genre = new JButton("Genre+");
+        genre = new FlatButton("Genre+");
 
         List<Genre> reqGenre = Genre.read();
         for (Genre pers : reqGenre) {
@@ -288,7 +295,7 @@ class AjoutOeuvrePanel extends JPanel {
         personalitiesLabel = new JLabel("Auteurs : ");
 
 
-        personalities = new JButton("Auteurs");
+        personalities = new FlatButton("Auteurs");
 
         List<Personality> reqPers = Personality.read();
         for (Personality pers : reqPers) {
@@ -300,7 +307,8 @@ class AjoutOeuvrePanel extends JPanel {
         }
 
         personalities.addActionListener(e -> {
-            List newParamPersonality = ConfirmNewValue.showDialogTripleField();
+            ConfirmNewValue box = new ConfirmNewValue();
+            List newParamPersonality = box.showDialogTripleField();
             if (!newParamPersonality.equals(new ArrayList<>())) {
                 Personality nvPersonality = new Personality((String) newParamPersonality.get(0), (String) newParamPersonality.get(1), (String) newParamPersonality.get(2), (Job) newParamPersonality.get(3));
                 nvPersonality.create();
@@ -337,7 +345,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         consoleLabel = new JLabel("Console : ");
 
-        console = new JButton("Console+");
+        console = new FlatButton("Console+");
         List<Console> reqCons = Console.read();
         for (Console cons : reqCons) {
             comboConsoles.addItem(cons);
@@ -352,9 +360,6 @@ class AjoutOeuvrePanel extends JPanel {
                 comboConsoles.setBackground(null);
             }
         });
-        this.add(consoleLabel);
-        this.add(comboConsoles);
-        this.add(console);
 
 
         //===== finished =====
@@ -367,7 +372,7 @@ class AjoutOeuvrePanel extends JPanel {
         this.add(finished);
 
 
-        boutonEnvoyer = new JButton("Envoyer");
+        boutonEnvoyer = new FlatButton("Envoyer");
         boutonEnvoyer.addActionListener(new FinalListener());
         this.add(boutonEnvoyer);
 
@@ -383,7 +388,6 @@ class AjoutOeuvrePanel extends JPanel {
         categorieLabel.setBounds(posX, posY, 100, 35);
         categorieLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
         this.add(categorieLabel);
-        comboCategorie.setBackground(new Color(0xc1c6ff));
         comboCategorie.setBounds(posX + spaceXCombo, posY, dimComboX, 35);
 
         titreLabel.setBounds(posX, posY + spaceLine, 100, 35);
@@ -403,17 +407,17 @@ class AjoutOeuvrePanel extends JPanel {
         supportLabel.setBounds(posX, posY + 4 * spaceLine, 100, 35);
         supportLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
         comboSupports.setBounds(posX + spaceXCombo, posY + 4 * spaceLine, dimComboX, dimComboY);
-        support.setBounds(posX + spaceXCombo + spaceXButton, posY + 4 * spaceLine, dimButtonX, dimButtonY);
+        support.setBounds(posX + spaceXCombo + 210, posY + 4 * spaceLine, 35, 35);
 
         versionLabel.setBounds(posX, posY + 5 * spaceLine, 100, 35);
         versionLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
         comboVersions.setBounds(posX + spaceXCombo, posY + 5 * spaceLine, dimComboX, dimComboY);
         version.setBounds(posX + spaceXCombo + spaceXButton, posY + 5 * spaceLine, dimButtonX, dimButtonY);
 
-        consoleLabel.setBounds(posX, posY + 5 * spaceLine, 100, 35);
+        consoleLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
         consoleLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
-        comboConsoles.setBounds(posX + spaceXCombo, posY + 5 * spaceLine, dimComboX, dimComboY);
-        console.setBounds(posX + spaceXCombo + spaceXButton, posY + 5 * spaceLine, dimButtonX, dimButtonY);
+        comboConsoles.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+        console.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
 
         originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
         originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));

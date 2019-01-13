@@ -8,7 +8,8 @@ public class GetIcon {
         icon_book("book.png"),
         icon_movie("movie.png"),
         icon_music("music.png"),
-        icon_videogame("videogame.png");
+        icon_videogame("videogame.png"),
+        icon_add("boutonPlus.png");
 
 
         private Icon i;

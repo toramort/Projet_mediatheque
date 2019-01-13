@@ -1,5 +1,7 @@
 package GUI;
 
+import GUI.assets.FlatButton;
+import GUI.assets.FlatCombo;
 import database.Job;
 
 import javax.swing.*;
@@ -9,7 +11,9 @@ import java.util.List;
 
 public class ConfirmNewValue extends JOptionPane {
 
+
     ConfirmNewValue() {
+        this.setBackground(Color.white);
     }
 
     public static String showDialogSimpleTextField() {
@@ -27,17 +31,18 @@ public class ConfirmNewValue extends JOptionPane {
         }
     }
 
-    public static List showDialogTripleField() {
-        JPanel jobsPanel;
-        JComboBox<Job> comboJobs = new JComboBox<>();
+    public List showDialogTripleField() {
+        this.setLayout(null);
+        JComboBox<Job> comboJobs = new FlatCombo<>();
         JButton job;
         JTextField valeur = new JTextField(20);
         JTextField valeur1 = new JTextField(20);
         JTextField valeur2 = new JTextField(20);
         JPanel panel = new JPanel();
-        jobsPanel = new JPanel(new GridLayout(1, 3));
+        JPanel jobsPanel = new JPanel();
         JLabel jobsLabel = new JLabel("Rôle : ");
-        job = new JButton("Rôle+");
+
+        job = new FlatButton("Rôle+");
 
         List<Job> reqJobs = Job.read();
         for (Job job1 : reqJobs) {
