@@ -1,6 +1,9 @@
 package GUI;
 
 
+import GUI.assets.ButtonAdd;
+import GUI.assets.FlatButton;
+import GUI.assets.FlatCombo;
 import database.*;
 
 import javax.swing.*;
@@ -14,76 +17,162 @@ import java.util.ArrayList;
 import java.util.List;
 
 class AjoutOeuvrePanel extends JPanel {
+
     private JTextField titre;
-    private JComboBox<Categorie> comboCategorie = new JComboBox<>();
-    private JComboBox<Origine> comboOrigins = new JComboBox<>();
-    private JComboBox<Support> comboSupports = new JComboBox<>();
-    private JComboBox<Version> comboVersions = new JComboBox<>();
-    private JComboBox<Genre> comboGenre = new JComboBox<>();
-    private JPanel versionPanel;
-    private JPanel morceauxPanel;
-    private JPanel personalitiesPanel;
-    private JComboBox<Personality> comboPersonalities = new JComboBox<>();
+    int spaceLine = 55;
+    private JComboBox<Categorie> comboCategorie = new FlatCombo<>();
+    private JComboBox<Origine> comboOrigins = new FlatCombo<>();
+    private JComboBox<Support> comboSupports = new FlatCombo<>();
+    private JComboBox<Version> comboVersions = new FlatCombo<>();
+    private JComboBox<Genre> comboGenre = new FlatCombo<>();
     private JFormattedTextField dateField;
-    private JPanel consolePanel;
-    private JComboBox<Console> comboConsoles = new JComboBox<>();
+    private JComboBox<Personality> comboPersonalities = new FlatCombo<>();
     private JCheckBox finished;
+    private JLabel consoleLabel;
+    private JLabel finishedLabel;
+    private JLabel titreLabel;
+    private JLabel originLabel;
+    private JButton origin;
+    private JLabel supportLabel;
+    private JButton support;
+    private JLabel versionLabel;
+    private JButton version;
+    private JLabel genreLabel;
+    private JLabel personalitiesLabel;
+    private JLabel dateLabel;
+    private JButton genre;
+    private JButton personalities;
+    private JButton console;
+    private JButton boutonEnvoyer;
+    private JLabel title = new JLabel("Ajouter une oeuvre");
+    private JLabel categorieLabel = new JLabel("Catégorie");
+    int posX = 400;
+    int posY = 120;
+    int spaceXCombo = 150;
+    private JComboBox<Console> comboConsoles = new FlatCombo<>();
+    int spaceXButton = 210;
+    int dimComboX = 200;
+    int dimComboY = 35;
+    int dimButtonX = 200;
+    int dimButtonY = 35;
+    int spaceXtitle = 200;
+    int spaceYtitle = -100;
+    private JPanel titrePanel = new JPanel();
 
 
     AjoutOeuvrePanel() {
 
-        GridBagLayout mainLayout = new GridBagLayout();
-
-
-        JPanel container = new JPanel();
-
-        GridLayout containerLayout = new GridLayout(11, 1);
-        containerLayout.setVgap(20);
-        container.setLayout(containerLayout);
 
         //===== titre =====
-        JPanel titrePanel = new JPanel(new GridLayout(1, 2, 75, 0));
 
-        JLabel titreLabel = new JLabel("Titre : ");
-        titrePanel.add(titreLabel);
+
+        titreLabel = new JLabel("Titre : ");
+        this.add(titreLabel);
 
         titre = new JTextField();
         titre.setPreferredSize(new Dimension(200, 30));
         titreLabel.setLabelFor(titre);
-        titrePanel.add(titre);
-        container.add(titrePanel);
+        this.add(titre);
 
         //==== catégorie =====
-        JPanel categoriePanel = new JPanel();
 
         for (Categorie cat : Categorie.read()) {
             comboCategorie.addItem(cat);
         }
+
         comboCategorie.addActionListener(e -> {
             if (comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
-                container.add(consolePanel);
+                this.add(console);
+                this.add(consoleLabel);
+                this.add(comboConsoles);
+
+                originLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+                originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                comboOrigins.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 7 * spaceLine, dimButtonX, dimButtonY);
+
+                dateLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
+                dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                dateField.setBounds(posX + spaceXCombo, posY + 8 * spaceLine, dimComboX, dimComboY);
+
+                finishedLabel.setBounds(posX, posY + 9 * spaceLine, 100, 35);
+                finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 9 * spaceLine + 5, 20, 20);
+
+                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 10 * spaceLine, dimButtonX, dimButtonY);
             } else {
-                container.remove(consolePanel);
+                this.remove(console);
+                this.remove(consoleLabel);
+                this.remove(comboConsoles);
+
+                originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+                originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                comboOrigins.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
+
+                dateLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+                dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                dateField.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+
+                finishedLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
+                finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 8 * spaceLine + 5, 20, 20);
+
+                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 9 * spaceLine, dimButtonX, dimButtonY);
             }
 
             if (comboCategorie.getSelectedItem().toString().equals("Album")) {
-                container.remove(versionPanel);
-            } else {
-                container.remove(morceauxPanel);
+                this.remove(version);
+                this.remove(versionLabel);
+                this.remove(comboVersions);
+                originLabel.setBounds(posX, posY + 5 * spaceLine, 100, 35);
+                originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                comboOrigins.setBounds(posX + spaceXCombo, posY + 5 * spaceLine, dimComboX, dimComboY);
+                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 5 * spaceLine, dimButtonX, dimButtonY);
+
+                dateLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+                dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                dateField.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+
+                finishedLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+                finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 7 * spaceLine + 5, 20, 20);
+
+                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 8 * spaceLine, dimButtonX, dimButtonY);
+
+            } else if (!comboCategorie.getSelectedItem().toString().equals("Jeu-vidéo")) {
+                this.add(version);
+                this.add(versionLabel);
+                this.add(comboVersions);
+                originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+                originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                comboOrigins.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+                origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
+
+                dateLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+                dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                dateField.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+
+                finishedLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
+                finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+                finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 8 * spaceLine + 5, 20, 20);
+
+                boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 9 * spaceLine, dimButtonX, dimButtonY);
             }
-            container.revalidate();
-            container.repaint();
+
+
+            this.revalidate();
+            this.repaint();
         });
 
-        categoriePanel.setBorder(BorderFactory.createTitledBorder("Categorie"));
-        categoriePanel.add(comboCategorie);
-        container.add(categoriePanel);
+
+        this.add(comboCategorie);
 
         //===== origine =====
-        JPanel originPanel = new JPanel(new GridLayout(1, 3, 75, 0));
-        JLabel originLabel = new JLabel("Origine : ");
 
-        JButton origin = new JButton("Origine+");
+        originLabel = new JLabel("Origine : ");
+
+        origin = new FlatButton("Origin+");
 
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -91,7 +180,7 @@ class AjoutOeuvrePanel extends JPanel {
                 Origine nvOrigine = new Origine(newNameOrigin);
                 nvOrigine.create();
                 comboOrigins.addItem(nvOrigine);
-                originPanel.setBackground(null);
+                this.setBackground(null);
             }
         });
 
@@ -101,21 +190,20 @@ class AjoutOeuvrePanel extends JPanel {
         }
 
         originLabel.setLabelFor(origin);
-        originPanel.add(originLabel);
+        this.add(originLabel);
 
         if (comboOrigins.getItemCount() == 0) {
-            originPanel.setBackground(Color.red);
+            this.setBackground(Color.red);
         }
-        originPanel.add(comboOrigins);
-        originPanel.add(origin);
-        container.add(originPanel);
+        this.add(comboOrigins);
+        this.add(origin);
 
         //===== support =====
-        JPanel supportPanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
-        JLabel supportLabel = new JLabel("Support : ");
 
-        JButton support = new JButton("Support+");
+        supportLabel = new JLabel("Support : ");
+
+        support = new ButtonAdd();
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
             String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
@@ -123,33 +211,30 @@ class AjoutOeuvrePanel extends JPanel {
                 Support nvSupport = new Support(newNameSupport);
                 nvSupport.create();
                 comboSupports.addItem(nvSupport);
-                supportPanel.setBackground(null);
+                supportLabel.setBackground(null);
             }
         });
 
         supportLabel.setLabelFor(support);
-        supportPanel.add(supportLabel);
+        this.add(supportLabel);
 
         List<Support> reqSupp = Support.read();
         for (Support supp : reqSupp) {
             comboSupports.addItem(supp);
         }
         if (comboSupports.getItemCount() == 0) {
-            supportPanel.setBackground(Color.red);
+            supportLabel.setBackground(Color.red);
         }
-        supportPanel.add(comboSupports);
-        supportPanel.add(support);
-        container.add(supportPanel);
+        this.add(comboSupports);
+        this.add(support);
 
         //===== version =====
-        versionPanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        versionLabel = new JLabel("Version : ");
 
-        JLabel versionLabel = new JLabel("Version : ");
-
-        JButton version = new JButton("Version+");
+        version = new FlatButton("Version+");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
-        versionPanel.add(versionLabel);
+        this.add(versionLabel);
 
         List<Version> reqVer = Version.read();
         for (Version vers : reqVer) {
@@ -157,7 +242,7 @@ class AjoutOeuvrePanel extends JPanel {
         }
 
         if (comboVersions.getItemCount() == 0) {
-            versionPanel.setBackground(Color.red);
+            this.setBackground(Color.red);
         }
 
         version.addActionListener(e -> {
@@ -166,19 +251,21 @@ class AjoutOeuvrePanel extends JPanel {
                 Version nvVersion = new Version(newNameVersion);
                 nvVersion.create();
                 comboVersions.addItem(nvVersion);
-                versionPanel.setBackground(null);
+                this.setBackground(null);
             }
         });
-        versionPanel.add(comboVersions);
-        versionPanel.add(version);
-        container.add(versionPanel);
+        this.add(comboVersions);
+        this.add(version);
 
         //===== genre =====
-        JPanel genrePanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        JPanel genrePanel;
+        genrePanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
-        JLabel genreLabel = new JLabel("Genre : ");
 
-        JButton genre = new JButton("Genre+");
+        genreLabel = new JLabel("Genre : ");
+
+
+        genre = new FlatButton("Genre+");
 
         List<Genre> reqGenre = Genre.read();
         for (Genre pers : reqGenre) {
@@ -199,36 +286,16 @@ class AjoutOeuvrePanel extends JPanel {
             }
         });
         genreLabel.setLabelFor(genre);
-        genrePanel.add(genreLabel);
-        genrePanel.add(comboGenre);
-        genrePanel.add(genre);
-        container.add(genrePanel);
-
-
-
-/*
-coder sélection des morceaux
- */
-
-        morceauxPanel = new JPanel(new GridLayout(1, 3, 75, 0));
-
-        JLabel morceauxLabel = new JLabel("Morceaux : ");
-
-        //JButton morceaux = new JButton("Morceaux");
-        //morceaux.addActionListener(e -> JOptionPane.showMessageDialog(container, "BOITE DE DIALOGUE AJOUT MULTIPLE DE MORCEAUX, CRéATION DE MORCEAUX", "BOITE DE DIALOGUE", JOptionPane.INFORMATION_MESSAGE));
-        JTextField morceaux = new JTextField();
-        morceauxLabel.setLabelFor(morceaux);
-        morceauxPanel.add(morceauxLabel);
-        morceauxPanel.add(morceaux);
-
+        this.add(genreLabel);
+        this.add(comboGenre);
+        this.add(genre);
 
         // ===== personalitites =====
 
-        personalitiesPanel = new JPanel(new GridLayout(1, 3, 75, 0));
+        personalitiesLabel = new JLabel("Auteurs : ");
 
-        JLabel personalitiesLabel = new JLabel("Auteurs : ");
 
-        JButton personalities = new JButton("Auteurs");
+        personalities = new FlatButton("Auteurs");
 
         List<Personality> reqPers = Personality.read();
         for (Personality pers : reqPers) {
@@ -236,28 +303,28 @@ coder sélection des morceaux
         }
 
         if (comboPersonalities.getItemCount() == 0) {
-            personalitiesPanel.setBackground(Color.red);
+            this.setBackground(Color.red);
         }
 
         personalities.addActionListener(e -> {
-            List newParamPersonality = ConfirmNewValue.showDialogTripleField();
+            ConfirmNewValue box = new ConfirmNewValue();
+            List newParamPersonality = box.showDialogTripleField();
             if (!newParamPersonality.equals(new ArrayList<>())) {
                 Personality nvPersonality = new Personality((String) newParamPersonality.get(0), (String) newParamPersonality.get(1), (String) newParamPersonality.get(2), (Job) newParamPersonality.get(3));
                 nvPersonality.create();
                 nvPersonality.createAssocJob();
                 comboPersonalities.addItem(nvPersonality);
-                personalitiesPanel.setBackground(null);
+                this.setBackground(null);
             }
         });
         personalitiesLabel.setLabelFor(personalities);
-        personalitiesPanel.add(personalitiesLabel);
-        personalitiesPanel.add(comboPersonalities);
-        personalitiesPanel.add(personalities);
-        container.add(personalitiesPanel);
+        this.add(personalitiesLabel);
+        this.add(comboPersonalities);
+        this.add(personalities);
 
         //===== date =====
-        JPanel datePanel = new JPanel(new GridLayout(1, 2, 75, 0));
-        JLabel dateLabel = new JLabel("Date : ");
+
+        dateLabel = new JLabel("Date : ");
         try {
             MaskFormatter dateMask = new MaskFormatter("####-##-##");
             dateField = new JFormattedTextField(dateMask);
@@ -270,24 +337,18 @@ coder sélection des morceaux
         dateField.setFont(font1);
         dateField.setHorizontalAlignment(JTextField.CENTER);
 
-        datePanel.add(dateLabel);
-        datePanel.add(dateField);
-        container.add(datePanel);
+        this.add(dateLabel);
+        this.add(dateField);
 
 
         //===== console =====
-        consolePanel = new JPanel(new GridLayout(1, 3, 75, 0));
 
-        JLabel consoleLabel = new JLabel("Console : ");
+        consoleLabel = new JLabel("Console : ");
 
-        JButton console = new JButton("Console+");
+        console = new FlatButton("Console+");
         List<Console> reqCons = Console.read();
         for (Console cons : reqCons) {
             comboConsoles.addItem(cons);
-        }
-
-        if (comboConsoles.getItemCount() == 0) {
-            consolePanel.setBackground(Color.red);
         }
 
         console.addActionListener(e -> {
@@ -299,26 +360,80 @@ coder sélection des morceaux
                 comboConsoles.setBackground(null);
             }
         });
-        consolePanel.add(consoleLabel);
-        consolePanel.add(comboConsoles);
-        consolePanel.add(console);
 
 
         //===== finished =====
 
-        JPanel finishedPanel = new JPanel(new GridLayout(1, 2, 75, 0));
-        JLabel finishedLabel = new JLabel("Terminé : ");
+
+        finishedLabel = new JLabel("Terminé : ");
         finished = new JCheckBox();
         finishedLabel.setLabelFor(finished);
-        finishedPanel.add(finishedLabel);
-        finishedPanel.add(finished);
-        container.add(finishedPanel);
+        this.add(finishedLabel);
+        this.add(finished);
 
 
-        JButton boutonEnvoyer = new JButton("Envoyer");
+        boutonEnvoyer = new FlatButton("Envoyer");
         boutonEnvoyer.addActionListener(new FinalListener());
-        container.add(boutonEnvoyer);
-        this.add(container);
+        this.add(boutonEnvoyer);
+
+        this.setLayout(null);
+        title.setFont(new Font("Staatliches", Font.PLAIN, 40));
+        title.setBounds(posX + spaceXtitle, posY + spaceYtitle, 400, 50);
+        titrePanel.add(title);
+        titrePanel.setBounds(0, 0, 2000, 90);
+        titrePanel.setBackground(new Color(0x858efc));
+        titrePanel.setLayout(null);
+        this.add(titrePanel);
+
+        categorieLabel.setBounds(posX, posY, 100, 35);
+        categorieLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        this.add(categorieLabel);
+        comboCategorie.setBounds(posX + spaceXCombo, posY, dimComboX, 35);
+
+        titreLabel.setBounds(posX, posY + spaceLine, 100, 35);
+        titreLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        titre.setBounds(posX + spaceXCombo, posY + spaceLine, dimComboX, dimComboY);
+
+        personalitiesLabel.setBounds(posX, posY + 2 * spaceLine, 100, 35);
+        personalitiesLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboPersonalities.setBounds(posX + spaceXCombo, posY + 2 * spaceLine, dimComboX, dimComboY);
+        personalities.setBounds(posX + spaceXCombo + spaceXButton, posY + 2 * spaceLine, dimButtonX, dimButtonY);
+
+        genreLabel.setBounds(posX, posY + 3 * spaceLine, 100, 35);
+        genreLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboGenre.setBounds(posX + spaceXCombo, posY + 3 * spaceLine, dimComboX, dimComboY);
+        genre.setBounds(posX + spaceXCombo + spaceXButton, posY + 3 * spaceLine, dimButtonX, dimButtonY);
+
+        supportLabel.setBounds(posX, posY + 4 * spaceLine, 100, 35);
+        supportLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboSupports.setBounds(posX + spaceXCombo, posY + 4 * spaceLine, dimComboX, dimComboY);
+        support.setBounds(posX + spaceXCombo + 210, posY + 4 * spaceLine, 35, 35);
+
+        versionLabel.setBounds(posX, posY + 5 * spaceLine, 100, 35);
+        versionLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboVersions.setBounds(posX + spaceXCombo, posY + 5 * spaceLine, dimComboX, dimComboY);
+        version.setBounds(posX + spaceXCombo + spaceXButton, posY + 5 * spaceLine, dimButtonX, dimButtonY);
+
+        consoleLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+        consoleLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboConsoles.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+        console.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
+
+        originLabel.setBounds(posX, posY + 6 * spaceLine, 100, 35);
+        originLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        comboOrigins.setBounds(posX + spaceXCombo, posY + 6 * spaceLine, dimComboX, dimComboY);
+        origin.setBounds(posX + spaceXCombo + spaceXButton, posY + 6 * spaceLine, dimButtonX, dimButtonY);
+
+        dateLabel.setBounds(posX, posY + 7 * spaceLine, 100, 35);
+        dateLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        dateField.setBounds(posX + spaceXCombo, posY + 7 * spaceLine, dimComboX, dimComboY);
+
+        finishedLabel.setBounds(posX, posY + 8 * spaceLine, 100, 35);
+        finishedLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        finished.setBounds(posX + spaceXCombo + spaceXButton / 2 - 10, posY + 8 * spaceLine + 5, 20, 20);
+
+        boutonEnvoyer.setBounds(posX + spaceXCombo + spaceXButton / 2, posY + 9 * spaceLine, dimButtonX, dimButtonY);
+        this.setBackground(Color.white);
 
     }
 
@@ -342,7 +457,7 @@ coder sélection des morceaux
             Personality finalPersonality = (Personality) comboPersonalities.getSelectedItem();
             LocalDate finalDate = null;
             Console finalConsole = null;
-            if (AjoutOeuvrePanel.this.consolePanel.isVisible()) {
+            if (AjoutOeuvrePanel.this.consoleLabel.isVisible()) {
                 finalConsole = (Console) comboConsoles.getSelectedItem();
             }
             try {

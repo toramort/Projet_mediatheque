@@ -1,5 +1,8 @@
 package GUI;
 
+import GUI.assets.FlatButton;
+import resources.images.GetIcon;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -10,9 +13,11 @@ class Fenetre extends JFrame {
 
     Fenetre() {
         this.setTitle("Outil de gestion de médiathèque");
-        this.setSize(1080, 720);
+        this.setSize(1920, 1080);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        ImageIcon icon = (ImageIcon) GetIcon.icones.icon_window.image();
+        this.setIconImage(icon.getImage());
 //
 //Container qui fait toute la dimension (container) du JFrame(pour pouvoir les moduler)
         JPanel container = new JPanel();
@@ -21,7 +26,8 @@ class Fenetre extends JFrame {
 //Container de gauche (containerMenu) dans lequel il y a les boutons pour séléctionner la catégorie voulu
         JPanel containerMenu = new JPanel();
         containerMenu.setLayout(new GridBagLayout());
-        containerMenu.setBackground(new Color(0xb5c5dd));
+        containerMenu.setBackground(new Color(0xd6d6d6));
+        containerMenu.setBorder(BorderFactory.createLineBorder(Color.black, 3));
 //
 //Création du menu & positionnement
         JPanel menu = new JPanel();

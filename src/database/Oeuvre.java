@@ -1,6 +1,5 @@
 package database;
 
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
@@ -34,7 +33,7 @@ public abstract class Oeuvre implements DatabaseObject {
 
     protected Origine origine;
 
-    @Nullable
+
     protected Version version;
 
 
@@ -60,7 +59,7 @@ public abstract class Oeuvre implements DatabaseObject {
      * @param personality Auteur de l'oeuvre
      * @param genres      Genre
      * @param origine     Origine
-     * @param version    Version
+     * @param version     Version
      * @param support     Support
      * @param categorie   Categorie
      */
@@ -110,6 +109,35 @@ public abstract class Oeuvre implements DatabaseObject {
         this.support = support;
         this.categorie = categorie;
     }
+
+    /*
+     *CONSTRUCTOR FOR READING
+     */
+    Oeuvre(int id_oeuvre, String title, LocalDate date_ajout, LocalDate date_oeuvre, boolean finished) {
+        this.id_oeuvre = id_oeuvre;
+        this.title = title;
+        this.date_ajout = date_ajout;
+        this.date_oeuvre = date_oeuvre;
+        this.finished = finished;
+    }
+
+
+    /*
+    public static List<Oeuvre> read(){
+        List<Oeuvre> temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from oeuvre");
+            temp = new ArrayList<>();
+            while (result.next()) {
+                temp.add(new Oeu(result.getInt("id_o"), result.getString("name_o")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+    */
 
     @Override
     public void create() {
