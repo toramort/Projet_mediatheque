@@ -42,7 +42,7 @@ public class Film extends Oeuvre {
 
     public static List<Film> read() {
         try {
-            String query = "SELECT * from oeuvre inner join categorie c on oeuvre.id_c = c.id_c WHERE name_c = 'Film'";
+            String query = "SELECT * from oeuvre inner join categorie c on oeuvre.id_c = c.id_c WHERE name_c = 'Film' ORDER BY id DESC";
             Statement state = conn.createStatement();
             ResultSet result = state.executeQuery(query);
             ArrayList<Film> filmsTemp = new ArrayList<>();
@@ -51,7 +51,7 @@ public class Film extends Oeuvre {
             }
             for (Film film : filmsTemp) {
 
-                ResultSet resultFilmUnique = state.executeQuery("SELECT id_p, id_o, id_c, id_s, id_v from oeuvre where id = " + film.getId_oeuvre());
+                ResultSet resultFilmUnique = state.executeQuery("SELECT id_p, id_o, id_c, id_s, id_v, id_g from oeuvre where id = " + film.getId_oeuvre() + " ORDER BY id DESC ");
                 resultFilmUnique.next();
                 film.setPersonality(Personality.read(resultFilmUnique.getInt("id_p")));
                 System.out.println(Personality.read(resultFilmUnique.getInt("id_p")));
@@ -60,6 +60,8 @@ public class Film extends Oeuvre {
                 film.setVersion(Version.read(resultFilmUnique.getInt("id_v")));
 
                 film.setSupport(Support.read(resultFilmUnique.getInt("id_s")));
+
+                film.setGenres(Genre.read(resultFilmUnique.getInt("id_g")));
             }
 
             return filmsTemp;

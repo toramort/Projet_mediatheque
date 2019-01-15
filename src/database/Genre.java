@@ -52,6 +52,19 @@ public class Genre implements DatabaseObject {
         return temp;
     }
 
+    public static Genre read(int id_genre) {
+        Genre temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from genre WHERE id_g = " + id_genre);
+            result.next();
+            temp = (new Genre(result.getInt("id_g"), result.getString("genre")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
     @Override
     public void create() {
         try {
