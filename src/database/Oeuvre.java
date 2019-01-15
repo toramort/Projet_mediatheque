@@ -142,7 +142,7 @@ public abstract class Oeuvre implements DatabaseObject {
     @Override
     public void create() {
         try {
-            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_o, id_v, id_c, id_s) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO oeuvre(id, title, date_ajout, date_oeuvre, finished, id_p, id_g, id_o, id_v, id_c, id_s) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, this.id_oeuvre);
             statement.setString(2, title);
@@ -150,10 +150,11 @@ public abstract class Oeuvre implements DatabaseObject {
             statement.setObject(4, date_oeuvre);
             statement.setBoolean(5, finished);
             statement.setInt(6, personality.getId_personality());
-            statement.setInt(7, origine.getId_o());
-            statement.setInt(8, version.getId_v());
-            statement.setInt(9, categorie.getId_c());
-            statement.setInt(10, support.getId_s());
+            statement.setInt(7, genres.getId_g());
+            statement.setInt(8, origine.getId_o());
+            statement.setInt(9, version.getId_v());
+            statement.setInt(10, categorie.getId_c());
+            statement.setInt(11, support.getId_s());
             statement.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de l'oeuvre",

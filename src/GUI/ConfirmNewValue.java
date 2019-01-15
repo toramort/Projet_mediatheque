@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.assets.FlatButton;
+import GUI.assets.CustomButton;
 import GUI.assets.FlatCombo;
 import database.Job;
 
@@ -42,7 +42,7 @@ public class ConfirmNewValue extends JOptionPane {
         JPanel jobsPanel = new JPanel();
         JLabel jobsLabel = new JLabel("Rôle : ");
 
-        job = new FlatButton("Rôle+");
+        job = CustomButton.flatButtonWhite("Rôle+");
 
         List<Job> reqJobs = Job.read();
         for (Job job1 : reqJobs) {

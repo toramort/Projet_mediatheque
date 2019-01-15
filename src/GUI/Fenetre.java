@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.assets.FlatButton;
+import GUI.assets.CustomButton;
 import resources.images.GetIcon;
 
 import javax.swing.*;
@@ -26,12 +26,13 @@ class Fenetre extends JFrame {
 //Container de gauche (containerMenu) dans lequel il y a les boutons pour séléctionner la catégorie voulu
         JPanel containerMenu = new JPanel();
         containerMenu.setLayout(new GridBagLayout());
-        containerMenu.setBackground(new Color(0xd6d6d6));
+        containerMenu.setBackground(new Color(0x858efc));
         containerMenu.setBorder(BorderFactory.createLineBorder(Color.black, 3));
 //
 //Création du menu & positionnement
         JPanel menu = new JPanel();
-        menu.setLayout(new GridLayout(5, 1));
+        menu.setLayout(new GridLayout(5, 1, 0, 20));
+        menu.setBackground(new Color(0x858efc));
 //
 //
         JPanel containerRight = new JPanel();
@@ -39,23 +40,32 @@ class Fenetre extends JFrame {
 //
 //Button pour séléctionner la catégorie à afficher dans 'menu'
 
-        JButton butAddOeuvre = new FlatButton("Oeuvre+");
+        JButton butAddOeuvre = CustomButton.flatButtonWhiteBlackButton("Oeuvre+");
+        butAddOeuvre.setFont(new Font("Staatliches", Font.PLAIN, 20));
+        butAddOeuvre.setForeground(new Color(0x3EAA40));
         butAddOeuvre.addActionListener(e -> mainLayout.show(containerRight, listContent[0]));
         menu.add(butAddOeuvre);
 
-        JButton butMusique = new FlatButton("Musiques");
+        JButton butMusique = CustomButton.flatButtonWhiteBlackButton("Musiques");
+        butMusique.setFont(new Font("Staatliches", Font.PLAIN, 20));
         butMusique.addActionListener(e -> mainLayout.show(containerRight, listContent[1]));
         menu.add(butMusique);
 
-        JButton butLivre = new FlatButton("Livres");
+        JButton butLivre = CustomButton.flatButtonWhiteBlackButton("Livres");
+        butLivre.setFont(new Font("Staatliches", Font.PLAIN, 20));
+
         butLivre.addActionListener(e -> mainLayout.show(containerRight, listContent[2]));
         menu.add(butLivre);
 
-        JButton butFilm = new FlatButton("Films");
+        JButton butFilm = CustomButton.flatButtonWhiteBlackButton("Films");
+        butFilm.setFont(new Font("Staatliches", Font.PLAIN, 20));
+
         butFilm.addActionListener(e -> mainLayout.show(containerRight, listContent[3]));
         menu.add(butFilm);
 
-        JButton butJeu = new FlatButton("Jeux");
+        JButton butJeu = CustomButton.flatButtonWhiteBlackButton("Jeux");
+        butJeu.setFont(new Font("Staatliches", Font.PLAIN, 20));
+
         butJeu.addActionListener(e -> mainLayout.show(containerRight, listContent[4]));
         menu.add(butJeu);
 

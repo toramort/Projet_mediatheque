@@ -1,8 +1,7 @@
 package GUI;
 
 
-import GUI.assets.ButtonAdd;
-import GUI.assets.FlatButton;
+import GUI.assets.CustomButton;
 import GUI.assets.FlatCombo;
 import database.*;
 
@@ -172,7 +171,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         originLabel = new JLabel("Origine : ");
 
-        origin = new FlatButton("Origin+");
+        origin = CustomButton.flatButtonWhite("Origin+");
 
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -203,7 +202,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         supportLabel = new JLabel("Support : ");
 
-        support = new ButtonAdd();
+        support = CustomButton.buttonIconAdd();
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
             String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
@@ -231,7 +230,7 @@ class AjoutOeuvrePanel extends JPanel {
         //===== version =====
         versionLabel = new JLabel("Version : ");
 
-        version = new FlatButton("Version+");
+        version = CustomButton.flatButtonWhite("Version+");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
         this.add(versionLabel);
@@ -265,7 +264,7 @@ class AjoutOeuvrePanel extends JPanel {
         genreLabel = new JLabel("Genre : ");
 
 
-        genre = new FlatButton("Genre+");
+        genre = CustomButton.flatButtonWhite("Genre+");
 
         List<Genre> reqGenre = Genre.read();
         for (Genre pers : reqGenre) {
@@ -295,7 +294,7 @@ class AjoutOeuvrePanel extends JPanel {
         personalitiesLabel = new JLabel("Auteurs : ");
 
 
-        personalities = new FlatButton("Auteurs");
+        personalities = CustomButton.flatButtonWhite("Auteurs");
 
         List<Personality> reqPers = Personality.read();
         for (Personality pers : reqPers) {
@@ -345,7 +344,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         consoleLabel = new JLabel("Console : ");
 
-        console = new FlatButton("Console+");
+        console = CustomButton.flatButtonWhite("Console+");
         List<Console> reqCons = Console.read();
         for (Console cons : reqCons) {
             comboConsoles.addItem(cons);
@@ -372,7 +371,7 @@ class AjoutOeuvrePanel extends JPanel {
         this.add(finished);
 
 
-        boutonEnvoyer = new FlatButton("Envoyer");
+        boutonEnvoyer = CustomButton.flatButtonWhite("Envoyer");
         boutonEnvoyer.addActionListener(new FinalListener());
         this.add(boutonEnvoyer);
 
