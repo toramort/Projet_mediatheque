@@ -55,6 +55,19 @@ public class Support implements DatabaseObject {
         return temp;
     }
 
+    public static Support read(int id_support) {
+        Support temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from support where id_s = " + id_support);
+            result.next();
+            temp = (new Support(result.getInt("id_s"), result.getString("name_s")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
     @Override
     public void create() {
         try {
