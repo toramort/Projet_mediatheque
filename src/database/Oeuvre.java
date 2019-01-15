@@ -10,44 +10,40 @@ import java.util.List;
 
 public abstract class Oeuvre implements DatabaseObject {
 
-    protected int id_oeuvre;
+    int id_oeuvre;
 
 
-    protected String title;
+    String title;
 
 
-    protected LocalDate date_ajout;
+    LocalDate date_ajout;
 
 
-    protected LocalDate date_oeuvre;
+    LocalDate date_oeuvre;
 
 
-    protected boolean finished;
+    boolean finished;
 
 
-    protected Personality personality;
+    Personality personality;
 
 
-    protected Genre genres;
+    Genre genres;
 
 
-    protected Origine origine;
+    Origine origine;
 
 
-    protected Version version;
+    Version version;
 
 
-    protected Support support;
+    Support support;
 
 
-    protected List<Evaluation> evaluations;
+    List<Evaluation> evaluations;
 
 
-    protected Categorie categorie;
-
-
-    Oeuvre() {
-    }
+    Categorie categorie;
 
     /**
      * CONSTRUCTEUR NOUVELLE OEUVRE
@@ -88,15 +84,6 @@ public abstract class Oeuvre implements DatabaseObject {
     /**
      * CONSTRUCTEUR SANS VERSION ET SANS EVALUATION ET SANS ID
      * POUR ALBUM
-     *
-     * @param title
-     * @param date_oeuvre
-     * @param finished
-     * @param personality
-     * @param genres
-     * @param origine
-     * @param support
-     * @param categorie
      */
     Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Support support, Categorie categorie) {
         this.title = title;
@@ -174,7 +161,7 @@ public abstract class Oeuvre implements DatabaseObject {
 
     }
 
-    public int getId_oeuvre() {
+    int getId_oeuvre() {
         return id_oeuvre;
     }
 
@@ -226,23 +213,23 @@ public abstract class Oeuvre implements DatabaseObject {
         this.id_oeuvre = id_oeuvre;
     }
 
-    public void setPersonality(Personality personality) {
+    void setPersonality(Personality personality) {
         this.personality = personality;
     }
 
-    public void setGenres(Genre genres) {
+    void setGenres(Genre genres) {
         this.genres = genres;
     }
 
-    public void setOrigine(Origine origine) {
+    void setOrigine(Origine origine) {
         this.origine = origine;
     }
 
-    public void setVersion(Version version) {
+    void setVersion(Version version) {
         this.version = version;
     }
 
-    public void setSupport(Support support) {
+    void setSupport(Support support) {
         this.support = support;
     }
 

@@ -23,7 +23,7 @@ public class Console implements DatabaseObject {
         }
     }
 
-    public Console(int id_c, String name_c) {
+    private Console(int id_c, String name_c) {
         this.id_c = id_c;
         this.name_c = name_c;
     }
@@ -64,7 +64,7 @@ public class Console implements DatabaseObject {
 
     }
 
-    public int getId_c() {
+    int getId_c() {
         return id_c;
     }
 

@@ -4,13 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DialogPersonalities extends JDialog {
-    private JPanel container;
     private String value1 = null;
     private JTextField input1;
 
     public DialogPersonalities(Frame owner, String title) {
         super(owner, title, true);
-        container = new JPanel();
+        JPanel container = new JPanel();
         JPanel btnPanel = new JPanel();
         input1 = new JTextField(20);
         JButton okBtn = new JButton("Accept");

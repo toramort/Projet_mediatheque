@@ -23,12 +23,12 @@ public class Genre implements DatabaseObject {
         }
     }
 
-    public Genre(int id_g, String genre) {
+    private Genre(int id_g, String genre) {
         this.id_g = id_g;
         this.genre = genre;
     }
 
-    public int getId_g() {
+    int getId_g() {
         return id_g;
     }
 

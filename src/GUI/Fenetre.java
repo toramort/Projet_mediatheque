@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
-class Fenetre extends JFrame {
+public class Fenetre extends JFrame {
 
     private String[] listContent = {"oeuvre+", "album", "game", "film", "livre"};
 
-    Fenetre() {
+    public Fenetre() {
         this.setTitle("Outil de gestion de médiathèque");
         this.setSize(1920, 1080);
         this.setLocationRelativeTo(null);

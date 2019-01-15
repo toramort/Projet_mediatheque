@@ -28,7 +28,7 @@ public class Film extends Oeuvre {
         super(title, date_oeuvre, finished, personality, genres, origine, versions, support, categorie);
     }
 
-    public Film(int id_oeuvre, String title, LocalDate date_ajout, LocalDate date_oeuvre, boolean finished) {
+    private Film(int id_oeuvre, String title, LocalDate date_ajout, LocalDate date_oeuvre, boolean finished) {
         super(id_oeuvre, title, date_ajout, date_oeuvre, finished);
         try {
             Statement state = conn.createStatement();
@@ -54,7 +54,7 @@ public class Film extends Oeuvre {
                 ResultSet resultFilmUnique = state.executeQuery("SELECT id_p, id_o, id_c, id_s, id_v, id_g from oeuvre where id = " + film.getId_oeuvre() + " ORDER BY id DESC ");
                 resultFilmUnique.next();
                 film.setPersonality(Personality.read(resultFilmUnique.getInt("id_p")));
-                System.out.println(Personality.read(resultFilmUnique.getInt("id_p")));
+
                 film.setOrigine(Origine.read(resultFilmUnique.getInt("id_o")));
 
                 film.setVersion(Version.read(resultFilmUnique.getInt("id_v")));

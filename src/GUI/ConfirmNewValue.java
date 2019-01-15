@@ -9,14 +9,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfirmNewValue extends JOptionPane {
+class ConfirmNewValue extends JOptionPane {
 
 
     ConfirmNewValue() {
         this.setBackground(Color.white);
     }
 
-    public static String showDialogSimpleTextField() {
+    static String showDialogSimpleTextField() {
         JTextField valeur = new JTextField(20);
         JPanel panel = new JPanel();
         panel.add(new JLabel("Valeur : "));
@@ -31,7 +31,7 @@ public class ConfirmNewValue extends JOptionPane {
         }
     }
 
-    public List showDialogTripleField() {
+    List showDialogTripleField() {
         this.setLayout(null);
         JComboBox<Job> comboJobs = new FlatCombo<>();
         JButton job;

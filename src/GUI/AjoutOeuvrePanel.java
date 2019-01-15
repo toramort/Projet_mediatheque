@@ -18,12 +18,12 @@ import java.util.List;
 class AjoutOeuvrePanel extends JPanel {
 
     private JTextField titre;
-    int spaceLine = 55;
     private JComboBox<Categorie> comboCategorie = new FlatCombo<>();
     private JComboBox<Origine> comboOrigins = new FlatCombo<>();
     private JComboBox<Support> comboSupports = new FlatCombo<>();
     private JComboBox<Version> comboVersions = new FlatCombo<>();
     private JComboBox<Genre> comboGenre = new FlatCombo<>();
+    int spaceLine = 55;
     private JFormattedTextField dateField;
     private JComboBox<Personality> comboPersonalities = new FlatCombo<>();
     private JCheckBox finished;

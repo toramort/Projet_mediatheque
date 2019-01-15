@@ -1,5 +1,4 @@
-package GUI;
-
+import GUI.Fenetre;
 import database.Connect;
 import database.Film;
 

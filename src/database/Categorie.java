@@ -10,7 +10,7 @@ public class Categorie implements DatabaseObject {
     private int id_c;
     private String name_c;
 
-    public Categorie(int id_c, String name_c) {
+    Categorie(int id_c, String name_c) {
         this.id_c = id_c;
         this.name_c = name_c;
     }

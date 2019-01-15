@@ -23,7 +23,7 @@ public class Job implements DatabaseObject {
         }
     }
 
-    public Job(int id_job, String name_job) {
+    Job(int id_job, String name_job) {
         this.name_job = name_job;
         this.id_job = id_job;
     }

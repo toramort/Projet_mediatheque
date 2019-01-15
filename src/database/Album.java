@@ -8,15 +8,6 @@ public class Album extends Oeuvre {
     /**
      * CONSTRUCTEUR SANS VERSION ET SANS EVALUATION ET SANS ID
      * POUR ALBUM
-     *
-     * @param title
-     * @param date_oeuvre
-     * @param finished
-     * @param personality
-     * @param genres
-     * @param origine
-     * @param support
-     * @param categorie
      */
     public Album(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Support support, Categorie categorie) {
         super(title, date_oeuvre, finished, personality, genres, origine, support, categorie);
