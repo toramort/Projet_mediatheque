@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 
 public class Fenetre extends JFrame {
 
-    private String[] listContent = {"oeuvre+", "album", "game", "film", "livre"};
+    private String[] listContent = {"welcome", "oeuvre+", "album", "game", "film", "livre"};
 
     public Fenetre() {
         this.setTitle("Outil de gestion de médiathèque");
@@ -43,61 +43,60 @@ public class Fenetre extends JFrame {
         JButton butAddOeuvre = CustomButton.flatButtonWhiteBlackButton("Oeuvre+");
         butAddOeuvre.setFont(new Font("Staatliches", Font.PLAIN, 20));
         butAddOeuvre.setForeground(new Color(0x3EAA40));
-        butAddOeuvre.addActionListener(e -> mainLayout.show(containerRight, listContent[0]));
+        butAddOeuvre.addActionListener(e -> mainLayout.show(containerRight, listContent[1]));
         menu.add(butAddOeuvre);
 
         JButton butMusique = CustomButton.flatButtonWhiteBlackButton("Musiques");
         butMusique.setFont(new Font("Staatliches", Font.PLAIN, 20));
-        butMusique.addActionListener(e -> mainLayout.show(containerRight, listContent[1]));
+        butMusique.addActionListener(e -> mainLayout.show(containerRight, listContent[2]));
         menu.add(butMusique);
 
         JButton butLivre = CustomButton.flatButtonWhiteBlackButton("Livres");
         butLivre.setFont(new Font("Staatliches", Font.PLAIN, 20));
 
-        butLivre.addActionListener(e -> mainLayout.show(containerRight, listContent[2]));
+        butLivre.addActionListener(e -> mainLayout.show(containerRight, listContent[3]));
         menu.add(butLivre);
 
         JButton butFilm = CustomButton.flatButtonWhiteBlackButton("Films");
         butFilm.setFont(new Font("Staatliches", Font.PLAIN, 20));
 
-        butFilm.addActionListener(e -> mainLayout.show(containerRight, listContent[3]));
+        butFilm.addActionListener(e -> mainLayout.show(containerRight, listContent[4]));
         menu.add(butFilm);
 
         JButton butJeu = CustomButton.flatButtonWhiteBlackButton("Jeux");
         butJeu.setFont(new Font("Staatliches", Font.PLAIN, 20));
 
-        butJeu.addActionListener(e -> mainLayout.show(containerRight, listContent[4]));
+        butJeu.addActionListener(e -> mainLayout.show(containerRight, listContent[5]));
         menu.add(butJeu);
 
 //
 //On créer 4 JPanel (1 pour chaque catégorie)
 
+        JPanel welcome = new WelcomePanel();
+
         JPanel addOeuvre = new AjoutOeuvrePanel();
 
-        JPanel musique = new AffOeuvrePanel();
-        musique.setBackground(Color.RED);
-        //JButton butAjoutMusique = new JButton("Ajouter");
-        //JButton butModMusique = new JButton("Modofier");
-        //JButton butSuppMusique = new JButton("Supprimer");
+        JPanel musique = new MusicDisplay();
 
-        JPanel livre = new JPanel();
-        livre.setBackground(Color.GREEN);
+        JPanel livre = new BookDisplay();
+        livre.setBackground(Color.white);
 
-        JPanel film = new JPanel();
-        film.setBackground(Color.PINK);
+        JPanel film = new FilmDisplay();
+        film.setBackground(Color.white);
 
-        JPanel jeu = new JPanel();
-        jeu.setBackground(Color.BLUE);
+        JPanel jeu = new GameDIsplay();
+        jeu.setBackground(Color.white);
 
 //
         container.add(containerRight, BorderLayout.CENTER);
         containerRight.setLayout(mainLayout);
 
-        containerRight.add(addOeuvre, listContent[0]);
-        containerRight.add(musique, listContent[1]);
-        containerRight.add(livre, listContent[2]);
-        containerRight.add(film, listContent[3]);
-        containerRight.add(jeu, listContent[4]);
+        containerRight.add(welcome, listContent[0]);
+        containerRight.add(addOeuvre, listContent[1]);
+        containerRight.add(musique, listContent[2]);
+        containerRight.add(livre, listContent[3]);
+        containerRight.add(film, listContent[4]);
+        containerRight.add(jeu, listContent[5]);
 
 //
 //Enbrication des JPanel

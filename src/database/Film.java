@@ -61,7 +61,7 @@ public class Film extends Oeuvre {
 
                 film.setSupport(Support.read(resultFilmUnique.getInt("id_s")));
 
-                film.setGenres(Genre.read(resultFilmUnique.getInt("id_g")));
+                film.setGenre(Genre.read(resultFilmUnique.getInt("id_g")));
             }
 
             return filmsTemp;
@@ -82,7 +82,7 @@ public class Film extends Oeuvre {
             ", date_oeuvre=" + date_oeuvre +
             ", finished=" + finished +
             ", personality=" + personality +
-            ", genres=" + genres +
+            ", genre=" + genre +
             ", origine=" + origine +
             ", version=" + version +
             ", support=" + support +

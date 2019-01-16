@@ -42,6 +42,20 @@ public class Console implements DatabaseObject {
         }
         return temp;
     }
+
+    public static Console read(int id_console) {
+        Console temp = null;
+        try {
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery("SELECT * from console where id_c = " + id_console);
+            result.next();
+            temp = (new Console(result.getInt("id_c"), result.getString("name_c")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
     @Override
     public void create() {
         try {

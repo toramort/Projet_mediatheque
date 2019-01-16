@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class AjoutOeuvrePanel extends JPanel {
+class AjoutOeuvrePanel extends AbstractPanel {
 
     private JTextField titre;
     private JComboBox<Categorie> comboCategorie = new FlatCombo<>();
@@ -23,7 +23,6 @@ class AjoutOeuvrePanel extends JPanel {
     private JComboBox<Support> comboSupports = new FlatCombo<>();
     private JComboBox<Version> comboVersions = new FlatCombo<>();
     private JComboBox<Genre> comboGenre = new FlatCombo<>();
-    int spaceLine = 55;
     private JFormattedTextField dateField;
     private JComboBox<Personality> comboPersonalities = new FlatCombo<>();
     private JCheckBox finished;
@@ -43,24 +42,12 @@ class AjoutOeuvrePanel extends JPanel {
     private JButton personalities;
     private JButton console;
     private JButton boutonEnvoyer;
-    private JLabel title = new JLabel("Ajouter une oeuvre");
     private JLabel categorieLabel = new JLabel("Catégorie");
-    int posX = 400;
-    int posY = 120;
-    int spaceXCombo = 150;
     private JComboBox<Console> comboConsoles = new FlatCombo<>();
-    int spaceXButton = 210;
-    int dimComboX = 200;
-    int dimComboY = 35;
-    int dimButtonX = 200;
-    int dimButtonY = 35;
-    int spaceXtitle = 200;
-    int spaceYtitle = -100;
-    private JPanel titrePanel = new JPanel();
 
 
     AjoutOeuvrePanel() {
-
+        super("Ajout d'une oeuvre");
 
         //===== titre =====
 
@@ -171,7 +158,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         originLabel = new JLabel("Origine : ");
 
-        origin = CustomButton.flatButtonWhite("Origin+");
+        origin = CustomButton.flatButtonWhite("Ajout origine");
 
         origin.addActionListener(e -> {
             String newNameOrigin = ConfirmNewValue.showDialogSimpleTextField();
@@ -202,7 +189,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         supportLabel = new JLabel("Support : ");
 
-        support = CustomButton.buttonIconAdd();
+        support = CustomButton.flatButtonWhite("Ajout support");
         support.setPreferredSize(new Dimension(100, 30));
         support.addActionListener(e -> {
             String newNameSupport = ConfirmNewValue.showDialogSimpleTextField();
@@ -230,7 +217,7 @@ class AjoutOeuvrePanel extends JPanel {
         //===== version =====
         versionLabel = new JLabel("Version : ");
 
-        version = CustomButton.flatButtonWhite("Version+");
+        version = CustomButton.flatButtonWhite("Ajout version");
         version.setPreferredSize(new Dimension(100, 30));
         versionLabel.setLabelFor(version);
         this.add(versionLabel);
@@ -264,7 +251,7 @@ class AjoutOeuvrePanel extends JPanel {
         genreLabel = new JLabel("Genre : ");
 
 
-        genre = CustomButton.flatButtonWhite("Genre+");
+        genre = CustomButton.flatButtonWhite("Ajout genre");
 
         List<Genre> reqGenre = Genre.read();
         for (Genre pers : reqGenre) {
@@ -294,7 +281,7 @@ class AjoutOeuvrePanel extends JPanel {
         personalitiesLabel = new JLabel("Auteurs : ");
 
 
-        personalities = CustomButton.flatButtonWhite("Auteurs");
+        personalities = CustomButton.flatButtonWhite("Ajout auteur");
 
         List<Personality> reqPers = Personality.read();
         for (Personality pers : reqPers) {
@@ -344,7 +331,7 @@ class AjoutOeuvrePanel extends JPanel {
 
         consoleLabel = new JLabel("Console : ");
 
-        console = CustomButton.flatButtonWhite("Console+");
+        console = CustomButton.flatButtonWhite("Ajout console");
         List<Console> reqCons = Console.read();
         for (Console cons : reqCons) {
             comboConsoles.addItem(cons);
@@ -375,15 +362,6 @@ class AjoutOeuvrePanel extends JPanel {
         boutonEnvoyer.addActionListener(new FinalListener());
         this.add(boutonEnvoyer);
 
-        this.setLayout(null);
-        title.setFont(new Font("Staatliches", Font.PLAIN, 40));
-        title.setBounds(posX + spaceXtitle, posY + spaceYtitle, 400, 50);
-        titrePanel.add(title);
-        titrePanel.setBounds(0, 0, 2000, 90);
-        titrePanel.setBackground(new Color(0x858efc));
-        titrePanel.setLayout(null);
-        this.add(titrePanel);
-
         categorieLabel.setBounds(posX, posY, 100, 35);
         categorieLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
         this.add(categorieLabel);
@@ -406,7 +384,7 @@ class AjoutOeuvrePanel extends JPanel {
         supportLabel.setBounds(posX, posY + 4 * spaceLine, 100, 35);
         supportLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));
         comboSupports.setBounds(posX + spaceXCombo, posY + 4 * spaceLine, dimComboX, dimComboY);
-        support.setBounds(posX + spaceXCombo + 210, posY + 4 * spaceLine, 35, 35);
+        support.setBounds(posX + spaceXCombo + spaceXButton, posY + 4 * spaceLine, dimButtonX, dimButtonY);
 
         versionLabel.setBounds(posX, posY + 5 * spaceLine, 100, 35);
         versionLabel.setFont(new Font("Staatliches", Font.PLAIN, 20));

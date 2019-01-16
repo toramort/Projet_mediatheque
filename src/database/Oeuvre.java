@@ -28,7 +28,7 @@ public abstract class Oeuvre implements DatabaseObject {
     Personality personality;
 
 
-    Genre genres;
+    Genre genre;
 
 
     Origine origine;
@@ -53,13 +53,13 @@ public abstract class Oeuvre implements DatabaseObject {
      * @param date_oeuvre Date de l'oeuvre
      * @param finished    Complétude
      * @param personality Auteur de l'oeuvre
-     * @param genres      Genre
+     * @param genre      Genre
      * @param origine     Origine
      * @param version     Version
      * @param support     Support
      * @param categorie   Categorie
      */
-    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Version version, Support support, Categorie categorie) {
+    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genre, Origine origine, Version version, Support support, Categorie categorie) {
         try {
             Statement state = conn.createStatement();
             ResultSet result = state.executeQuery("SELECT MAX(id) as max_id from oeuvre ");
@@ -73,7 +73,7 @@ public abstract class Oeuvre implements DatabaseObject {
         this.date_oeuvre = date_oeuvre;
         this.finished = finished;
         this.personality = personality;
-        this.genres = genres;
+        this.genre = genre;
         this.origine = origine;
         this.version = version;
         this.support = support;
@@ -85,13 +85,13 @@ public abstract class Oeuvre implements DatabaseObject {
      * CONSTRUCTEUR SANS VERSION ET SANS EVALUATION ET SANS ID
      * POUR ALBUM
      */
-    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genres, Origine origine, Support support, Categorie categorie) {
+    Oeuvre(String title, LocalDate date_oeuvre, boolean finished, Personality personality, Genre genre, Origine origine, Support support, Categorie categorie) {
         this.title = title;
         this.date_oeuvre = date_oeuvre;
         this.date_ajout = LocalDate.now();
         this.finished = finished;
         this.personality = personality;
-        this.genres = genres;
+        this.genre = genre;
         this.origine = origine;
         this.support = support;
         this.categorie = categorie;
@@ -137,7 +137,7 @@ public abstract class Oeuvre implements DatabaseObject {
             statement.setObject(4, date_oeuvre);
             statement.setBoolean(5, finished);
             statement.setInt(6, personality.getId_personality());
-            statement.setInt(7, genres.getId_g());
+            statement.setInt(7, genre.getId_g());
             statement.setInt(8, origine.getId_o());
             statement.setInt(9, version.getId_v());
             statement.setInt(10, categorie.getId_c());
@@ -185,8 +185,8 @@ public abstract class Oeuvre implements DatabaseObject {
         return personality;
     }
 
-    public Genre getGenres() {
-        return genres;
+    public Genre getGenre() {
+        return genre;
     }
 
     public Origine getOrigine() {
@@ -217,8 +217,8 @@ public abstract class Oeuvre implements DatabaseObject {
         this.personality = personality;
     }
 
-    void setGenres(Genre genres) {
-        this.genres = genres;
+    void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     void setOrigine(Origine origine) {

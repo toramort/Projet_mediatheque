@@ -8,7 +8,7 @@ import static java.sql.DriverManager.getConnection;
 public class Connect {
     private static Connection conn;
 
-    public Connect(String url, String user, String passwd) {
+    public static void setup(String url, String user, String passwd) {
 
         conn = null;
         try {
