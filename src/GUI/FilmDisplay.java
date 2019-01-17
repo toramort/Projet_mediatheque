@@ -28,15 +28,15 @@ class FilmDisplay extends AbstractPanel {
 
         JTable tableau = new JTable(model);
         tableau.setPreferredSize(new Dimension(700, 700));
-        TableColumn column = null;
+        TableColumn column;
         for (int i = 0; i < 3; i++) {
             column = tableau.getColumnModel().getColumn(i);
             column.setPreferredWidth(30);
         }
-
+        tableau.setPreferredScrollableViewportSize(new Dimension(700, 700));
         JScrollPane tabPane = new JScrollPane(tableau);
         tabPane.setFont(new Font("Staatliches", Font.PLAIN, 10));
-        tabPane.setBounds(350, 200, 400, 400);
+        tabPane.setBounds(0, 90, 1450, 990);
         this.add(tabPane);
     }
 

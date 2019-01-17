@@ -34,7 +34,7 @@ class BookDisplay extends AbstractPanel {
         }
         JScrollPane tabPane = new JScrollPane(tableau);
         tabPane.setFont(new Font("Staatliches", Font.PLAIN, 10));
-        tabPane.setBounds(350, 200, 400, 400);
+        tabPane.setBounds(0, 90, 1450, 990);
         this.add(tabPane);
     }
 
